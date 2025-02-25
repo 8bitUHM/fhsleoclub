@@ -9,6 +9,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
+        contact: resolve(__dirname, "contact/index.html"),
+        events: resolve(__dirname, "events/index.html"),
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
       },
     },
