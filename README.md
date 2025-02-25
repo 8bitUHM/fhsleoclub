@@ -45,3 +45,14 @@ The following most used scripts are available:
 - `npm run dev`: Starts the development server.
 - `npm run build`: Builds the application for production.
 - `npm run lint`: Lints the codebase.
+
+## Folder Structure (src)
+
+```
+src/  <-- source code
+   assets/ <-- pictures, videos, other assets
+   components/ <-- React Components (.tsx extension)
+   pages/ <-- React pages (.tsx extension)
+   index.css <-- Base Tailwind styles
+   vite-env.d.ts <-- TypeScript Intellisense for VITE env variables stored here
+```
