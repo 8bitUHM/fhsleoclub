@@ -33,7 +33,7 @@ With a **Multi-Page Configuration** setup, we are able to handle routing with di
 
 ## Adding a new route entry point
 
-1. Within the ./src folder, create your routing folder and its respective index.html -- If I wanted to created a /food routing, create a /food folder in ./src and a index.html file in ./src/food
+1. Within the root folder, create your routing folder and its respective index.html -- If I wanted to created a /food routing, create a /food folder in ./src and a index.html file in ./src/food
 2. In the new index.html file, you can copy and paste the contents from the src index.html and change the page entry point on line 11.
 3. Run the dev server with ```npm run dev``` and going to your page route should work as expected, just dont forgot the slash at the end -- `http://localhost:5173/food/`
 4. In order to add this new entry point to the build, edit the vite.config.ts config file to include it -- there is an example of it on line 12
