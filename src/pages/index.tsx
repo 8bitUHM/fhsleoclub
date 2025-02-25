@@ -2,7 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../index.css";
 
 export function Index() {
@@ -12,6 +13,7 @@ export function Index() {
 
   return (
     <>
+      <Navbar /> 
       <section className="bg-white">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           <a
@@ -97,6 +99,7 @@ export function Index() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
