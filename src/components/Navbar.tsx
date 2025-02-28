@@ -1,7 +1,28 @@
+import {  useEffect } from "react";
 
 const Navbar = () => {
+
+    // closes navbar if you click outside of it 
+    useEffect(() => {
+        const sidebar = document.getElementById("default-sidebar");
+        const toggleButton = document.querySelector("[data-drawer-toggle='default-sidebar']");
+
+        const closeSidebar = (event: MouseEvent) => {
+            if (sidebar && toggleButton && !sidebar.contains(event.target as Node) && !toggleButton.contains(event.target as Node)) {
+                sidebar.classList.add("-translate-x-full");
+            }
+        };
+
+        document.addEventListener("click", closeSidebar);
+
+        return () => {
+            document.removeEventListener("click", closeSidebar);
+        };
+    }, []);
+
     return (
         <>
+        {/* Toggle button */}
         <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 bg-red-900 rounded-lg sm:hidden hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
         <span className="sr-only">Open sidebar</span>
         <svg className="w-6 h-6" aria-hidden="true" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -9,6 +30,7 @@ const Navbar = () => {
         </svg>
         </button>
 
+        {/* navbar */}
         <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div className="h-full px-3 py-4 overflow-y-auto bg-red-900 dark:bg-gray-800">
             <ul className="space-y-2 font-medium">
@@ -53,4 +75,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar
+export default Navbar;
