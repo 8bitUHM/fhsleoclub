@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-red-900 dark:bg-gray-800">
             <ul className="space-y-2 font-medium">
                 <li>
-                    <a href="./" className="flex items-center p-2 text-white font-large rounded-lg group">
+                    <a href="./" className="flex items-center p-2 text-white font-large font-bold rounded-lg group">
                     <img src="./public/fhs-leo-club-logo.png" className="d-inline-block w-10 h-10 align-top shadow rounded"></img>
                     <span className="ms-3">FARRINGTON HIGH SCHOOL LEO CLUB</span>
                     </a>
