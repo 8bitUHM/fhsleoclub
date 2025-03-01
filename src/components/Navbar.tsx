@@ -36,7 +36,7 @@ const Navbar = () => {
             <ul className="space-y-2 font-medium">
                 <li>
                     <a href="./" className="flex items-center p-2 text-white font-large font-bold rounded-lg group">
-                    <img src="./public/fhs-leo-club-logo.png" className="d-inline-block w-10 h-10 align-top shadow rounded"></img>
+                    <img src="./fhs-leo-club-logo.png" className="d-inline-block w-10 h-10 align-top shadow rounded"></img>
                     <span className="ms-3">FARRINGTON HIGH SCHOOL LEO CLUB</span>
                     </a>
                 </li>
