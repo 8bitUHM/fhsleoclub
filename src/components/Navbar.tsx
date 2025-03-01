@@ -20,16 +20,16 @@ const Navbar = () => {
                         <a href="/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 md:bg-transparent md:text-white md:py-2 md:hover:bg-red-800 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="/events.html" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 md:hover:bg-transparent md:py-2 md:border-0 md:hover:bg-red-800 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Events</a>
+                        <a href="/events/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 md:hover:bg-transparent md:py-2 md:border-0 md:hover:bg-red-800 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Events</a>
                     </li>
                     <li>
-                        <a href="/contact.html" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 md:hover:bg-transparent md:py-2 md:border-0 md:hover:bg-red-800 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+                        <a href="/contact/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 md:hover:bg-transparent md:py-2 md:border-0 md:hover:bg-red-800 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
                     </li>
                 </ul>
             </div>
         </div>
         </nav>
-    </>
+        </>
     );
 
 };
