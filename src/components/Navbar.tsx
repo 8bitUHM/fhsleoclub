@@ -17,13 +17,13 @@ const Navbar = () => {
             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-red-900 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-red-900 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <a href="/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2" aria-current="page">Home</a>
+                        <a href="/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="/events/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:border-0">Events</a>
+                        <a href="/events/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Events</a>
                     </li>
                     <li>
-                        <a href="/contact/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:border-0">Contact</a>
+                        <a href="/contact/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Contact</a>
                     </li>
                 </ul>
             </div>
