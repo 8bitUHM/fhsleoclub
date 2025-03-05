@@ -5,3 +5,9 @@
 :root {
     scroll-behavior: smooth;
 }
+
+@media screen and (prefers-reduced-motion: reduce) {
+    :root {
+        scroll-behavior: initial;
+    }
+}
