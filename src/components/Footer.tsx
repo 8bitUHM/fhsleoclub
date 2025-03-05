@@ -3,7 +3,14 @@ const Footer = () => {
         <>
             <footer className="bg-red-900 shadow-sm dark:bg-gray-800">
                 <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between md:flex-wrap md:content-between">
-                    <div className="md:flex md:flex-wrap items-center mt-3 font-medium text-white dark:text-gray-400 sm:mt-0">
+                    <span className="hidden md:block text-sm text-white sm:text-center dark:text-gray-400">
+                        © 2024{" "}
+                        <a href="https://flowbite.com/" className="hover:underline">
+                            8bitUHM
+                        </a>
+                        , All Rights Reserved.
+                    </span>
+                    <div className="md:flex md:flex-wrap items-center font-medium text-white dark:text-gray-400 sm:mt-0">
                         <div className="py-2 md:py-0">
                             <a href="#" className="flex items-center hover:underline me-4 md:me-6">
                                 <svg className="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -38,7 +45,7 @@ const Footer = () => {
                             </a>
                         </div>
                     </div>
-                    <span className="text-sm text-white sm:text-center dark:text-gray-400">
+                    <span className="md:hidden text-sm text-white sm:text-center dark:text-gray-400">
                         © 2024{" "}
                         <a href="https://flowbite.com/" className="hover:underline">
                             8bitUHM
