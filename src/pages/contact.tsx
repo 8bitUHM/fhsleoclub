@@ -17,8 +17,6 @@ export function Contact() {
         <>
             <Navbar />
             <Header />
-            <h1>This is the Contact Page</h1>
-
             <Footer />
         </>
     );
