@@ -27,9 +27,9 @@ export function Index() {
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-[#800000] mb-8 text-center">What is Leo Club?</h2>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="flex gap-12 items-center">
               <div>
-                <p className="text-lg mb-4">
+                <p className="text-center text-2xl mb-4">
                 The W.R. Farrington High School Leo Club is a school-based 
                 community service club sponsored by the Kalakaua Lions. Our club 
                 ensures our students have the opportunity to serve their community 
@@ -38,11 +38,6 @@ export function Index() {
                 in any way we can. Community service is our calling!
                 </p>
               </div>
-              <img 
-                src="https://images.unsplash.com/photo-1582213184778-3b508709fd4a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                alt="Students volunteering"
-                className="rounded-lg shadow-lg"
-              />
             </div>
           </div>
         </section>
@@ -53,19 +48,11 @@ export function Index() {
             <h2 className="text-3xl md:text-4xl font-bold text-[#800000] mb-8 text-center">Benefits of Joining</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                'Develop leadership skills',
-                'Community service hours',
-                'College application boost',
-                'Make new friends',
-                'Professional networking',
-                'Personal growth opportunities'
+                'Develop skills as a project organizer, time manager, and team leader.',
+                'Learn how teamwork, cooperation, and collaboration can bring exciting changes to your community and the world.',
+                'Make friends and feel the rewards of community service.'
               ].map((benefit, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
-                  <div className="w-12 h-12 bg-[#800000] rounded-full flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
                   <p className="text-lg font-semibold">{benefit}</p>
                 </div>
               ))}
@@ -113,13 +100,13 @@ export function Index() {
             <div className="grid md:grid-cols-2 gap-8 text-center">
               <div>
                 <h4 className="text-xl font-bold mb-4">Email</h4>
-                <a href="mailto:fhsleoclub@example.com" className="hover:text-gray-200">farringtonhighschoolleoclub@gmail.com</a>
+                <a href="farringtonhighschoolleoclub@gmail.com" className="hover:text-gray-200 hover:underline">farringtonhighschoolleoclub@gmail.com</a>
               </div>
               <div>
                 <h4 className="text-xl font-bold mb-4">Follow Us</h4>
-                <div className="flex justify-center space-x-4">
-                  <a href="#" className="hover:text-gray-200">
-                    <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"></path></svg>
+                <div className="flex items-center me-4 justify-center hover:underline space-x-4">
+                  <a href="https://www.instagram.com/fhs_leo_club/" className="hover:text-gray-200">
+                    <svg className="w-10 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"></path></svg>
                   </a>
                 </div>
               </div>
