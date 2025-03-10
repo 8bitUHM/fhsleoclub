@@ -4,6 +4,7 @@ import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 import "../index.css";
 
 export function Index() {
@@ -14,7 +15,7 @@ export function Index() {
   return (
     <>
       <Navbar />
-      <h1>This is the home page</h1>
+      <Header />
       <Footer />
     </>
   );
