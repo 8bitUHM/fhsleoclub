@@ -18,7 +18,8 @@ export function Index() {
         {/* Hero Section */}
         <section className="bg-red-900 text-white py-20 px-4">
           <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">FHS Leo Club</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Farrington High School</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Leo Club</h1>
             <p className="text-xl md:text-2xl mb-8">Leadership, Experience, Opportunity</p>
           </div>
         </section>
@@ -53,7 +54,7 @@ export function Index() {
                 'Make friends and feel the rewards of community service.'
               ].map((benefit, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
-                  <p className="text-2xl font-semibold">{benefit}</p>
+                  <p className="text-2xl font-semibold text-center">{benefit}</p>
                 </div>
               ))}
             </div>
@@ -99,16 +100,14 @@ export function Index() {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Contact Us</h2>
             <div className="flex-auto justify-center text-center">
               <div className="mb-8">
-                <h4 className="text-2xl font-bold mb-4">Email</h4>
-                <a href="farringtonhighschoolleoclub@gmail.com" className="hover:text-gray-200 hover:underline">farringtonhighschoolleoclub@gmail.com</a>
+                <h4 className="text-2xl font-bold mb-4">
+                  Email: <a href="farringtonhighschoolleoclub@gmail.com" className="hover:text-gray-200 hover:underline">farringtonhighschoolleoclub@gmail.com</a>
+                </h4>
               </div>
               <div>
-                <h4 className="text-2xl font-bold mb-4">Follow Us</h4>
-                <div className="flex items-center justify-center hover:underline space-x-4">
-                  <a href="https://www.instagram.com/fhs_leo_club/" className="hover:text-gray-200">
-                    <svg className="w-8 h-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" clip-rule="evenodd"></path></svg>
-                  </a>
-                </div>
+                <h4 className="text-2xl font-bold mb-4">
+                  Follow us on Instagram: <a href="https://www.instagram.com/fhs_leo_club" className="hover:text-gray-200 hover:underline">@fhs_leo_club</a>
+                </h4>
               </div>
             </div>
           </div>
