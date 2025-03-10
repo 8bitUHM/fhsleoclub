@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-    :root {
-        scroll-behavior: auto;
-    }
+  :root {
+    scroll-behavior: auto;
+  }
 }
