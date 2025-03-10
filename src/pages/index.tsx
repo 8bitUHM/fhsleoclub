@@ -15,16 +15,8 @@ export function Index() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen font-[Quicksand]">
-        {/* Hero Section */}
-        <section className="bg-red-900 text-white py-20 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Farrington High School</h1>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Leo Club</h1>
-            <p className="text-xl md:text-2xl mb-8">Leadership, Experience, Opportunity</p>
-          </div>
-        </section>
-
+      <Header />
+      <main className="min-h-screen">
         {/* What is Leo Club */}
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
@@ -114,7 +106,7 @@ export function Index() {
           </div>
         </section>
       </main>
-      <Header />
+      
       <Footer />
     </>
   );
