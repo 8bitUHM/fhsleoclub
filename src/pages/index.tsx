@@ -40,7 +40,7 @@ export function Index() {
         <section className="bg-gray-50 py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-red-900 mb-8 text-center">Benefits of Joining</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {[
                 'Develop skills as a project organizer, time manager, and team leader.',
                 'Learn how teamwork, cooperation, and collaboration can bring exciting changes to your community and the world.',
@@ -57,7 +57,7 @@ export function Index() {
         {/* Pledge & Motto */}
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="flex-auto gap-20">
+            <div className="flex flex-col gap-8 md:flex-row">
               <div className="bg-red-900 text-white text-center p-8 rounded-lg">
                 <h3 className="text-3xl font-bold mb-4">Leo Club Pledge</h3>
                 <p className="text-2xl italic">
