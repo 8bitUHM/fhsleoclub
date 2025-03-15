@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Social from "../components/Social";
 
 import "../index.css";
 
@@ -17,6 +18,7 @@ export function Contact() {
         <>
             <Navbar />
             <Header />
+            <Social />
             <Footer />
         </>
     );
