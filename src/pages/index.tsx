@@ -58,10 +58,10 @@ export function Index() {
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col gap-8 md:flex-row">
-              <div className="bg-red-900 text-white text-center p-8 rounded-lg">
+              <div className="bg-red-900 text-white text-center text-pretty p-8 rounded-lg">
                 <h3 className="text-3xl font-bold mb-4">Leo Club Pledge</h3>
-                <p className="text-2xl italic">
-                  "I pledge on my hands, extended and opened to those in need.
+                <p className="text-2xl italic relative before:content-['❝'] before:pr-2">
+                  I pledge on my hands, extended and opened to those in need.
                 </p>
                 <p className="text-2xl italic">
                   I pledge on my heart, reach for it, and it will be touched.
@@ -75,8 +75,8 @@ export function Index() {
                 <p className="text-2xl italic">
                   I pledge on my knowledge to bring a man closer to his dreams.
                 </p>
-                <p className="text-2xl italic">
-                  I pledge on myself for the betterment of my community, my state, and my country."
+                <p className="text-2xl italic relative after:content-['❞'] after:ps-2">
+                  I pledge on myself for the betterment of my community, my state, and my country.
                 </p>
               </div>
               <div className="bg-gray-100 p-8 rounded-lg text-center">
@@ -87,24 +87,6 @@ export function Index() {
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section className="bg-red-900 text-white py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Contact Us</h2>
-            <div className="flex-auto justify-center text-center">
-              <div className="mb-8">
-                <h4 className="text-2xl font-bold mb-4">
-                  Email: <a href="farringtonhighschoolleoclub@gmail.com" className="hover:text-gray-200 hover:underline">farringtonhighschoolleoclub@gmail.com</a>
-                </h4>
-              </div>
-              <div>
-                <h4 className="text-2xl font-bold mb-4">
-                  Follow us on Instagram: <a href="https://www.instagram.com/fhs_leo_club" className="hover:text-gray-200 hover:underline">@fhs_leo_club</a>
-                </h4>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       
       <Footer />
