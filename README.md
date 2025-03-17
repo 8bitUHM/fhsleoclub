@@ -63,4 +63,6 @@ If you are implementing a component or page and need to look at how it looks on 
 
 [Test a local website on phone (starting at 3:30)](https://youtu.be/uRYHX4EwYYA?si=CmiI0zMpJ_2bzQkx&t=210)
 
-afterwards, run `npx vite --host` to expose the site to other devices on the network and then type in the link into your mobile device. 
+Afterwards, run `npx vite --host` to expose the site to other devices on the network and then type in the link next to `network` into your mobile device. 
+
+**Note**: If you're on Mac, you don't need to follow the video, you should be able to just do the `npx vite --host` command and then copy the link onto your phone. 
