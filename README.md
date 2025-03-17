@@ -56,3 +56,11 @@ src/  <-- source code
    index.css <-- Base Tailwind styles
    vite-env.d.ts <-- TypeScript Intellisense for VITE env variables stored here
 ```
+
+## Testing for Responsiveness
+
+If you are implementing a component or page and need to look at how it looks on other devices such as phones or tablets, do the following **first**
+
+[Test a local website on phone (starting at 3:30)](https://youtu.be/uRYHX4EwYYA?si=CmiI0zMpJ_2bzQkx&t=210)
+
+afterwards, run `npx vite --host` to expose the site to other devices on the network and then type in the link into your mobile device. 
