@@ -31,6 +31,8 @@ With a **Multi-Page Configuration** setup, we are able to handle routing with di
 3. Open the application in your browser:
    - By default, the development server runs on `http://localhost:5173`.
 
+4. Create a .env file in your root directory and then add in the env variables in the discord
+
 ## Adding a new route entry point
 
 1. Within the root folder, create your routing folder and its respective index.html -- If I wanted to created a /food routing, create a /food folder in the root directory and a index.html file in the food directory
