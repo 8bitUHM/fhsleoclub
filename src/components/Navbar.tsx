@@ -25,6 +25,9 @@ const Navbar = () => {
                     <li>
                         <a href="/contact/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Contact</a>
                     </li>
+                     <li>
+                        <a href="/members/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Members</a>
+                    </li>
                 </ul>
             </div>
         </div>
