@@ -26,7 +26,7 @@ export function Contact() {
 
             {/* Student Section */}
             <section className="py-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-red-900 text-center">If you want to join Leo Club. Fill out the form below</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-red-900 text-center">To sign-up for Leo Club, Fill out the form below</h2>
                 <div className="w-full">
                     <iframe
                         src="https://docs.google.com/forms/d/e/1FAIpQLSd8sFRwdVTedWxaBa1aNjEWApPxMRx54vtvvnZvteWaB3IGtQ/viewform?embedded=true"
