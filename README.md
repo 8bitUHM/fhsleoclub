@@ -51,9 +51,10 @@ The following most used scripts are available:
 ## Folder Structure (src)
 
 ```
-src/  <-- source code
-   assets/ <-- pictures, videos, other assets
+src/  <-- Source code
+   assets/ <-- Pictures, videos, other assets
    components/ <-- React Components (.tsx extension)
+   lib/ <-- Configurations for firebase
    pages/ <-- React pages (.tsx extension)
    index.css <-- Base Tailwind styles
    vite-env.d.ts <-- TypeScript Intellisense for VITE env variables stored here
