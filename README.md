@@ -60,6 +60,14 @@ src/  <-- Source code
    vite-env.d.ts <-- TypeScript Intellisense for VITE env variables stored here
 ```
 
+## Folder Structure (lib)
+
+```
+lib/ <-- Firebase configurations
+   config.ts <-- Firebase config file
+   dbRefs.ts <-- References to database
+```
+
 ## Testing for Responsiveness
 
 If you are implementing a component or page and need to look at how it looks on other devices such as phones or tablets, do the following **first**
