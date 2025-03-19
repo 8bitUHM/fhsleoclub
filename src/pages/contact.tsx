@@ -19,8 +19,8 @@ export function Contact() {
             <Navbar />
             <Header />
             {/* Socials Section */}
-            <section className="bg-red-900 pt-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-white text-center">Stay updated with us on:</h2>
+            <section className="bg-red-900 p-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-white text-center p-4">Stay updated with us on:</h2>
                 <Social />
             </section>
 

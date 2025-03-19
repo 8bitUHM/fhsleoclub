@@ -54,43 +54,88 @@ export function Members() {
 
   const { advisors, officers, generalMembers } = categorizeMembers(members);
 
+  {/*Test Data. Please delete me before pull request*/ }
+  advisors.push(
+    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
+
+  );
+
+  officers.push(
+    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
+    { email: "advisor2@example.com", name: "Bob Smith", role: "Technical Advisor" },
+    { email: "advisor3@example.com", name: "Charlie Davis", role: "Financial Advisor" },
+  );
+
+  generalMembers.push(
+    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
+    { email: "advisor2@example.com", name: "Bob Smith", role: "Technical Advisor" },
+    { email: "advisor3@example.com", name: "Charlie Davis", role: "Financial Advisor" },
+    { email: "advisor4@example.com", name: "Diana Lopez", role: "Legal Advisor" },
+    { email: "advisor5@example.com", name: "Ethan Wright", role: "Research Advisor" },
+    { email: "advisor6@example.com", name: "Fiona Brown", role: "Marketing Advisor" },
+    { email: "advisor7@example.com", name: "George Harris", role: "Operations Advisor" },
+    { email: "advisor8@example.com", name: "Hannah Lewis", role: "Strategic Advisor" },
+    { email: "advisor9@example.com", name: "Ian Clark", role: "Industry Advisor" },
+    { email: "advisor10@example.com", name: "Jessica Hall", role: "Policy Advisor" },
+    { email: "advisor11@example.com", name: "Kevin Walker", role: "HR Advisor" },
+    { email: "advisor13@example.com", name: "Jevin Walker", role: "JR Advisor" },
+  );
+
   return (
     <>
       <Navbar />
       <Header />
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Leo Club Members</h1>
 
-        {/* Advisors Section */}
-        <section>
-          <h2 className="text-xl font-semibold">Advisors</h2>
-          <ul>
+      {/* Advisors Section */}
+      <section className="bg-red-900 p-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Advisors</h2>
+        <div className="flex justify-center">
+
+          {/* The main issue is that it's restricted because of grid-cols-4. We need to find a way to make it where it'll only be grid-cols-4 if its 4 or more but if not, then it'd be grid-cols-(That specific amount) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
             {advisors.map((member) => (
-              <li key={member.email}>{member.name} - {member.role} ({member.email})</li>
+              <div key={member.email} className="mb-4">
+                <div>{member.name}</div>
+                <div>{member.role}</div>
+                <div>{member.email}</div>
+              </div>
             ))}
-          </ul>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* Officers Section */}
-        <section>
-          <h2 className="text-xl font-semibold">Student Officers</h2>
-          <ul>
+      {/* Officers Section */}
+      <section className="p-6 justify">
+        <h2 className="text-3xl md:text-4xl font-bold text-center pb-6 text-red-900">Meet our Officers</h2>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-red-900">
             {officers.map((member) => (
-              <li key={member.email}>{member.name} - {member.role} ({member.email})</li>
+              <div key={member.email} className="mb-4">
+                <div>{member.name}</div>
+                <div>{member.role}</div>
+                <div>{member.email}</div>
+              </div>
             ))}
-          </ul>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* General Members Section */}
-        <section>
-          <h2 className="text-xl font-semibold">Club Members</h2>
-          <ul>
+      {/* General Members Section */}
+      <section className="bg-red-900 p-6 justify">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Club Members</h2>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
             {generalMembers.map((member) => (
-              <li key={member.email}>{member.name} - {member.role} ({member.email})</li>
+              <div key={member.email} className="mb-4">
+                <div>{member.name}</div>
+                <div>{member.role}</div>
+                <div>{member.email}</div>
+              </div>
             ))}
-          </ul>
-        </section>
-      </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </>
   );
