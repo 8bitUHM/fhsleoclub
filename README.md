@@ -60,12 +60,20 @@ src/  <-- Source code
    vite-env.d.ts <-- TypeScript Intellisense for VITE env variables stored here
 ```
 
+## Folder Structure (lib)
+
+```
+lib/ <-- Firebase configurations
+   config.ts <-- Firebase config file
+   dbRefs.ts <-- References to database
+```
+
 ## Testing for Responsiveness
 
 If you are implementing a component or page and need to look at how it looks on other devices such as phones or tablets, do the following **first**
 
 [Test a local website on phone (starting at 3:30)](https://youtu.be/uRYHX4EwYYA?si=CmiI0zMpJ_2bzQkx&t=210)
 
-Afterwards, run `npx vite --host` to expose the site to other devices on the network and then type in the link next to `network` into your mobile device. 
+Afterwards, run `npm run dev` to expose the site to other devices on the network and then type in the link next to `network` into your mobile device. 
 
-**Note**: If you're on Mac, you don't need to follow the video, you should be able to just do the `npx vite --host` command and then copy the link onto your phone. 
+**Note**: If you're on Mac, you don't need to follow the video, you should be able to just do the `npm run dev` command and then copy the link onto your phone. 
