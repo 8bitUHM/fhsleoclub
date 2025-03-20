@@ -92,7 +92,7 @@ export function Members() {
       <section className="bg-red-900 p-6">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Advisors</h2>
         <div className="flex justify-center">
-          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${advisorLength} gap-14 text-center text-white`}>
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${advisorLength} gap-14 text-center text-white`}>
             {advisors.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
@@ -115,7 +115,7 @@ export function Members() {
       <section className="p-6 justify">
         <h2 className="text-3xl md:text-4xl font-bold text-center pb-6 text-red-900">Meet our Officers</h2>
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14 text-center text-red-900">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-14 text-center text-red-900">
             {officers.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
