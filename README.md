@@ -66,6 +66,7 @@ src/  <-- Source code
 lib/ <-- Firebase configurations
    config.ts <-- Firebase config file
    dbRefs.ts <-- References to database
+   types.ts <-- Type references for database
 ```
 
 ## Testing for Responsiveness
