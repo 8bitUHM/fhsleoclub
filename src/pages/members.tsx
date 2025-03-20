@@ -6,13 +6,9 @@ import { onValue } from "firebase/database";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { Member } from "../lib/types";
 import "../index.css";
 
-type Member = {
-  email: string;
-  name: string;
-  role: string;
-};
 
 export function Members() {
 
@@ -28,7 +24,8 @@ export function Members() {
         setMembers({});
       }
     });
-
+    
+    // Function call so that unsubscribe is called every time. 
     return () => unsubscribe();
   }, []);
 
@@ -53,34 +50,6 @@ export function Members() {
   };
 
   const { advisors, officers, generalMembers } = categorizeMembers(members);
-
-  {/*Test Data. Please delete me before merging onto main*/ }
-  advisors.push(
-    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
-  );
-
-  officers.push(
-    { email: "vicepresident@example.com", name: "Ipsum Lorem", role: "Vice President" },
-    { email: "secretary@example.com", name: "Jane Smith", role: "Secretary" },
-    { email: "treasurer@example.com", name: "Mark Johnson", role: "Treasurer" }
-  );
-
-  generalMembers.push(
-    { email: "member1@example.com", name: "Alice Green", role: "Member" },
-    { email: "member2@example.com", name: "Bob White", role: "Member" },
-    { email: "member3@example.com", name: "Charlie Blue", role: "Member" },
-    { email: "member4@example.com", name: "Diana Red", role: "Member" },
-    { email: "member5@example.com", name: "Edward Black", role: "Member" },
-    { email: "member6@example.com", name: "Fiona Grey", role: "Member" },
-    { email: "member7@example.com", name: "George Yellow", role: "Member" },
-    { email: "member8@example.com", name: "Hannah Pink", role: "Member" },
-    { email: "member9@example.com", name: "Isaac Purple", role: "Member" },
-    { email: "member10@example.com", name: "Jack Brown", role: "Member" },
-    { email: "member11@example.com", name: "Kylie Orange", role: "Member" },
-    { email: "member12@example.com", name: "Liam Silver", role: "Member" }
-  );
-  // Test data code ends here
-
 
   return (
     <>
