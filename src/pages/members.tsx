@@ -81,7 +81,6 @@ export function Members() {
   );
   // Test data code ends here
 
-  const advisorLength = advisors.length < 4 ? advisors.length : 4;
 
   return (
     <>
@@ -89,13 +88,12 @@ export function Members() {
       <Header />
 
       {/* Advisors Section */}
-      <section className="bg-red-900 p-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Advisors</h2>
-        <div className="flex justify-center">
-          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${advisorLength} gap-14 text-center text-white`}>
+      <section className="bg-red-900 p-6 text-white text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold pb-6">Advisors</h2>
+          <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
             {advisors.map((member) => (
-              <div key={member.email} className="mb-4">
-                <div>{member.name}</div>
+              <div key={member.email} className="mb-4 space-y-1">
+                <div className="text-lg font-medium">{member.name}</div>
                 <div className="capitalize">{member.role}</div>
                 <div>
                   <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
@@ -108,17 +106,15 @@ export function Members() {
               </div>
             ))}
           </div>
-        </div>
       </section>
 
       {/* Officers Section */}
-      <section className="p-6 justify">
-        <h2 className="text-3xl md:text-4xl font-bold text-center pb-6 text-red-900">Meet our Officers</h2>
-        <div className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-14 text-center text-red-900">
+      <section className="p-6 text-red-900 text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
             {officers.map((member) => (
-              <div key={member.email} className="mb-4">
-                <div>{member.name}</div>
+              <div key={member.email} className="mb-4 space-y-1">
+                <div className="text-lg font-medium">{member.name}</div>
                 <div className="capitalize">{member.role}</div>
                 <div>
                   <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
@@ -131,17 +127,16 @@ export function Members() {
               </div>
             ))}
           </div>
-        </div>
       </section>
 
       {/* General Members Section */}
-      <section className="bg-red-900 p-6 justify">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Club Members</h2>
+      <section className="bg-red-900 p-6 text-white text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold pb-6">Club Members</h2>
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-14 text-center text-white">
+          <div className="grid grid-flow-row-dense grid-cols-2 lg:grid-cols-4 place-items-center gap-x-8 gap-y-2">
             {generalMembers.map((member) => (
-              <div key={member.email} className="mb-4">
-                <div>{member.name}</div>
+              <div key={member.email} className="mb-4 space-y-1">
+                <div className="text-lg font-medium">{member.name}</div>
                 <div>
                   <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
                     <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
