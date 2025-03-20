@@ -82,8 +82,6 @@ export function Members() {
   // Test data code ends here
 
   const advisorLength = advisors.length < 4 ? advisors.length : 4;
-  const officersLength = officers.length < 4 ? officers.length : 4;
-  const membersLength = generalMembers.length < 4 ? generalMembers.length : 4;
 
   return (
     <>
@@ -94,8 +92,6 @@ export function Members() {
       <section className="bg-red-900 p-6">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Advisors</h2>
         <div className="flex justify-center">
-
-          {/* The main issue is that it's restricted because of grid-cols-4. We need to find a way to make it where it'll only be grid-cols-4 if its 4 or more but if not, then it'd be grid-cols-(That specific amount) */}
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${advisorLength} gap-4 text-center text-white`}>
             {advisors.map((member) => (
               <div key={member.email} className="mb-4">
@@ -112,7 +108,7 @@ export function Members() {
       <section className="p-6 justify">
         <h2 className="text-3xl md:text-4xl font-bold text-center pb-6 text-red-900">Meet our Officers</h2>
         <div className="flex justify-center">
-          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${officersLength} gap-4 text-center text-red-900`}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-red-900">
             {officers.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
@@ -128,7 +124,7 @@ export function Members() {
       <section className="bg-red-900 p-6 justify">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Club Members</h2>
         <div className="flex justify-center">
-          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${membersLength} gap-4 text-center text-white`}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
             {generalMembers.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
