@@ -54,32 +54,36 @@ export function Members() {
 
   const { advisors, officers, generalMembers } = categorizeMembers(members);
 
-  {/*Test Data. Please delete me before pull request*/ }
+  {/*Test Data. Please delete me before merging onto main*/ }
   advisors.push(
     { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
-
   );
 
   officers.push(
-    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
-    { email: "advisor2@example.com", name: "Bob Smith", role: "Technical Advisor" },
-    { email: "advisor3@example.com", name: "Charlie Davis", role: "Financial Advisor" },
+    { email: "vicepresident@example.com", name: "Ipsum Lorem", role: "Vice President" },
+    { email: "secretary@example.com", name: "Jane Smith", role: "Secretary" },
+    { email: "treasurer@example.com", name: "Mark Johnson", role: "Treasurer" }
   );
 
   generalMembers.push(
-    { email: "advisor1@example.com", name: "Alice Johnson", role: "Senior Advisor" },
-    { email: "advisor2@example.com", name: "Bob Smith", role: "Technical Advisor" },
-    { email: "advisor3@example.com", name: "Charlie Davis", role: "Financial Advisor" },
-    { email: "advisor4@example.com", name: "Diana Lopez", role: "Legal Advisor" },
-    { email: "advisor5@example.com", name: "Ethan Wright", role: "Research Advisor" },
-    { email: "advisor6@example.com", name: "Fiona Brown", role: "Marketing Advisor" },
-    { email: "advisor7@example.com", name: "George Harris", role: "Operations Advisor" },
-    { email: "advisor8@example.com", name: "Hannah Lewis", role: "Strategic Advisor" },
-    { email: "advisor9@example.com", name: "Ian Clark", role: "Industry Advisor" },
-    { email: "advisor10@example.com", name: "Jessica Hall", role: "Policy Advisor" },
-    { email: "advisor11@example.com", name: "Kevin Walker", role: "HR Advisor" },
-    { email: "advisor13@example.com", name: "Jevin Walker", role: "JR Advisor" },
+    { email: "member1@example.com", name: "Alice Green", role: "Member" },
+    { email: "member2@example.com", name: "Bob White", role: "Member" },
+    { email: "member3@example.com", name: "Charlie Blue", role: "Member" },
+    { email: "member4@example.com", name: "Diana Red", role: "Member" },
+    { email: "member5@example.com", name: "Edward Black", role: "Member" },
+    { email: "member6@example.com", name: "Fiona Grey", role: "Member" },
+    { email: "member7@example.com", name: "George Yellow", role: "Member" },
+    { email: "member8@example.com", name: "Hannah Pink", role: "Member" },
+    { email: "member9@example.com", name: "Isaac Purple", role: "Member" },
+    { email: "member10@example.com", name: "Jack Brown", role: "Member" },
+    { email: "member11@example.com", name: "Kylie Orange", role: "Member" },
+    { email: "member12@example.com", name: "Liam Silver", role: "Member" }
   );
+  // Test data code ends here
+
+  const advisorLength = advisors.length < 4 ? advisors.length : 4;
+  const officersLength = officers.length < 4 ? officers.length : 4;
+  const membersLength = generalMembers.length < 4 ? generalMembers.length : 4;
 
   return (
     <>
@@ -92,11 +96,11 @@ export function Members() {
         <div className="flex justify-center">
 
           {/* The main issue is that it's restricted because of grid-cols-4. We need to find a way to make it where it'll only be grid-cols-4 if its 4 or more but if not, then it'd be grid-cols-(That specific amount) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${advisorLength} gap-4 text-center text-white`}>
             {advisors.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
-                <div>{member.role}</div>
+                <div className="capitalize">{member.role}</div>
                 <div>{member.email}</div>
               </div>
             ))}
@@ -108,11 +112,11 @@ export function Members() {
       <section className="p-6 justify">
         <h2 className="text-3xl md:text-4xl font-bold text-center pb-6 text-red-900">Meet our Officers</h2>
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-red-900">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${officersLength} gap-4 text-center text-red-900`}>
             {officers.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
-                <div>{member.role}</div>
+                <div className="capitalize">{member.role}</div>
                 <div>{member.email}</div>
               </div>
             ))}
@@ -124,11 +128,10 @@ export function Members() {
       <section className="bg-red-900 p-6 justify">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center pb-6">Meet our Club Members</h2>
         <div className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-white">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-${membersLength} gap-4 text-center text-white`}>
             {generalMembers.map((member) => (
               <div key={member.email} className="mb-4">
                 <div>{member.name}</div>
-                <div>{member.role}</div>
                 <div>{member.email}</div>
               </div>
             ))}
