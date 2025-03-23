@@ -4,4 +4,12 @@ type Member = {
   role: string;
 };
 
-export type { Member };
+type Events = {
+  description: string,
+  end_time: string,
+  location: string,
+  start_time: string,
+  title: string,
+}
+
+export type { Member, Events };
