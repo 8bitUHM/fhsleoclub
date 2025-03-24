@@ -8,10 +8,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Member } from "../lib/types";
 import "../index.css";
+import Loading from "../components/Loading";
 
 
 export function Members() {
 
+  const [isLoading, setIsLoading] = useState(true);
   const [members, setMembers] = useState<Record<string, Member>>({});
 
   useEffect(() => {
@@ -24,9 +26,16 @@ export function Members() {
         setMembers({});
       }
     });
-    
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
     // Function call so that unsubscribe is called every time. 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(timer);
+      unsubscribe();
+    };
   }, []);
 
   const categorizeMembers = (members: Record<string, Member>) => {
@@ -55,47 +64,50 @@ export function Members() {
     <>
       <Navbar />
       <Header />
+      <div className="flex justify-center items-center">
+        {isLoading ? <Loading /> : <p>Content is loaded!</p>}
+      </div>
 
       {/* Advisors Section */}
       <section className="bg-red-900 p-6 text-white text-center">
         <h2 className="text-3xl md:text-4xl font-semibold pb-6">Advisors</h2>
-          <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
-            {advisors.map((member) => (
-              <div key={member.email} className="mb-4 space-y-1">
-                <div className="text-lg font-medium">{member.name}</div>
-                <div className="capitalize">{member.role}</div>
-                <div>
-                  <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
-                    <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-                    </svg>
-                    <span>Email</span>
-                  </a>
-                </div>
+        <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
+          {advisors.map((member) => (
+            <div key={member.email} className="mb-4 space-y-1">
+              <div className="text-lg font-medium">{member.name}</div>
+              <div className="capitalize">{member.role}</div>
+              <div>
+                <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
+                  <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
+                  </svg>
+                  <span>Email</span>
+                </a>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Officers Section */}
       <section className="p-6 text-red-900 text-center">
         <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-            {officers.map((member) => (
-              <div key={member.email} className="mb-4 space-y-1">
-                <div className="text-lg font-medium">{member.name}</div>
-                <div className="capitalize">{member.role}</div>
-                <div>
-                  <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
-                    <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
-                    </svg>
-                    <span>Email</span>
-                  </a>
-                </div>
+        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
+          {officers.map((member) => (
+            <div key={member.email} className="mb-4 space-y-1">
+              <div className="text-lg font-medium">{member.name}</div>
+              <div className="capitalize">{member.role}</div>
+              <div>
+                <a href={`mailto:${member.email}`} className="flex justify-center hover:underline">
+                  <svg className="w-8 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m3.5 5.5 7.893 6.036a1 1 0 0 0 1.214 0L20.5 5.5M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z" />
+                  </svg>
+                  <span>Email</span>
+                </a>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* General Members Section */}
