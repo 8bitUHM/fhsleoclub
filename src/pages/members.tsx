@@ -8,10 +8,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Member } from "../lib/types";
 import "../index.css";
+import Loading from "../components/Loading";
 
 
 export function Members() {
 
+  const [isLoading, setIsLoading] = useState(true);
   const [members, setMembers] = useState<Record<string, Member>>({});
 
   useEffect(() => {
@@ -25,8 +27,15 @@ export function Members() {
       }
     });
 
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
 
-    return () => unsubscribe();
+    // Function call so that unsubscribe is called every time. 
+    return () => {
+      clearTimeout(timer);
+      unsubscribe();
+    };
   }, []);
 
   const categorizeMembers = (members: Record<string, Member>) => {
@@ -55,6 +64,9 @@ export function Members() {
     <>
       <Navbar />
       <Header />
+      <div className="flex justify-center items-center">
+        {isLoading ? <Loading /> : <p>Content is loaded!</p>}
+      </div>
 
       {/* Advisors Section */}
       <section className="bg-red-900 p-6 text-white text-center">
