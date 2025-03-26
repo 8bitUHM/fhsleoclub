@@ -30,17 +30,17 @@ export function Events() {
             <Navbar />
             <Header />
             <main className="p-8">
-                <form className="inline-flex rounded-lg shadow-sm font-medium text-sm text-white bg-red-600/85" role="group">
+                <form className="inline-flex rounded-lg shadow-sm font-medium text-sm text-white bg-rose-600" role="group">
                     <p className="sr-only">Sort by latest or earliest events</p>
                     <button type="button" 
-                            className="px-4 py-2 rounded-s-lg hover:bg-red-800 inline-flex items-center text-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-900" 
+                            className="px-4 py-2 rounded-s-lg hover:bg-rose-700 inline-flex items-center text-center gap-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-900" 
                             value="latest"
                             onClick={() => setOrder("latest")}
                             >
                         Latest
                     </button>
                     <button type="button" 
-                            className="px-4 py-2 rounded-e-lg hover:bg-red-800 inline-flex items-center text-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-900" 
+                            className="px-4 py-2 rounded-e-lg hover:bg-rose-700 inline-flex items-center text-center gap-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-900" 
                             value="earliest"
                             onClick={() => setOrder("earliest")}
                             >
