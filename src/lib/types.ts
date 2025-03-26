@@ -10,6 +10,7 @@ type ClubEvent = {
   location: string,
   start_time: string,
   title: string,
+  date: number,
 }
 
 export type { Member, ClubEvent };
