@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 export function Events() {
     const [ events, setEvents ] = useState<ClubEvent[]>([]);
     const [ isLatest, setIsLatest ] = useState(true);
+    const [ isLoading, setIsLoading ] = useState(true);
 
     useEffect(() => {
         initFlowbite();
@@ -23,6 +24,7 @@ export function Events() {
                 // Initially setting events to be latest first
                 values = values.sort((a, b) => (b.date >= a.date ? 1 : -1));
                 setEvents(values);
+                setIsLoading(false);
             }
         });
 
@@ -72,7 +74,7 @@ export function Events() {
 
                 <section className="gap-x-4 gap-y-4 justify-center" style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 20rem))"}}>
                     {
-                        events.length !== 0 ? 
+                        !isLoading ? 
                         (events.map((val, index) => (
                             <article className="grid grid-rows-subgrid gap-y-0 row-span-4 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${index}`}>
                                 <span className="pb-2 font-normal text-sm text-pink-900">{new Date(val.date).toLocaleDateString()}</span>
