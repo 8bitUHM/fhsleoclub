@@ -53,16 +53,17 @@ export function Members() {
   };
 
   const { advisors, officers, generalMembers } = categorizeMembers(members);
-  
+
 
   return (
     <>
+
+      <Navbar />
+      <Header />
+
       {
         !isLoading && (
           <>
-            <Navbar />
-            <Header />
-
             {/* Advisors Section */}
             <section className="bg-red-900 p-6 text-white text-center">
               <h2 className="text-3xl md:text-4xl font-semibold pb-6">Advisors</h2>
