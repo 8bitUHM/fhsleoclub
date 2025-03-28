@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const Navbar = () => {
 
-    let isSignedIn = false;
+    let isSignedIn = true;
 
     useEffect(() => {
         initFlowbite();
@@ -43,10 +43,10 @@ const Navbar = () => {
                         </ul>
                     </div>
 
-                    <div className="flex items-center pt-1 order-3 space-x-0 md:space-x-3">
+                    <div className="flex items-center pt-1 order-3">
                         {isSignedIn ? (
                             <>
-                                <button type="button" className="flex text-sm bg-gray-800 rounded-full md:me-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                                <button type="button" className="flex text-sm bg-gray-800 rounded-full" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                                     <span className="sr-only">Open user menu</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">
                                         <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
@@ -55,8 +55,8 @@ const Navbar = () => {
 
                                 <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm" id="user-dropdown">
                                     <div className="px-4 py-3">
-                                        <span className="block text-sm text-gray-900">Maximilien Featherstone</span>
-                                        <span className="block text-sm text-gray-500">Maximilien_Featherstone_2023@farringtonhighschool.org</span>
+                                        <span className="block text-sm text-gray-900 break-words max-w-[200px]">Maximilien Featherstone</span>
+                                        <span className="block text-sm text-gray-500 break-words max-w-[200px]">Maximilien_Featherstone_2023@farringtonhighschool.org</span>
                                     </div>
                                     <ul className="py-2" aria-labelledby="user-menu-button">
                                         <li>
