@@ -54,7 +54,6 @@ export function Members() {
 
   const { advisors, officers, generalMembers } = categorizeMembers(members);
 
-
   return (
     <>
 
