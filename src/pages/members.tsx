@@ -6,7 +6,7 @@ import { onValue } from "firebase/database";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { Member } from "../lib/types";
+import { Member, Roles } from "../lib/types";
 import "../index.css";
 
 
@@ -40,9 +40,7 @@ export function Members() {
     Object.values(members).forEach((member) => {
       if (member.role.toLowerCase() === "club advisor") {
         advisors.push(member);
-      } else if (
-        ["president", "vice president", "secretary", "treasurer"].includes(member.role.toLowerCase())
-      ) {
+      } else if (member.role in Roles) {
         officers.push(member);
       } else {
         generalMembers.push(member);
@@ -87,9 +85,9 @@ export function Members() {
             {/* Officers Section */}
             <section className="p-6 text-red-900 text-center">
               <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
-              <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-                {officers.map((member) => (
-                  <div key={member.email} className="mb-4 space-y-1">
+              <div className="grid grid-cols-2 gap-x-4 justify-center items-center md:grid-cols-3 lg:grid-cols-6">
+                {officers.sort((a, b) => Roles[a.role] - Roles[b.role]).map((member) => (
+                  <div key={member.email} className="mb-4 space-y-1 grid grid-rows-subgrid row-span-3">
                     <div className="text-lg font-medium">{member.name}</div>
                     <div className="capitalize">{member.role}</div>
                     <div>
