@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const Navbar = () => {
 
-    let isSignedIn = true;
+    let isSignedIn = false;
 
     useEffect(() => {
         initFlowbite();
@@ -67,7 +67,9 @@ const Navbar = () => {
                                 </div>
                             </>
                         ) : (
-                            <button type="button" className="text-red-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-4 py-2">Sign-In</button>
+                            <a href="/signin/">
+                                <button type="button" className="text-red-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-4 py-2">Sign-In</button>
+                            </a>
                         )}
                     </div>
 
