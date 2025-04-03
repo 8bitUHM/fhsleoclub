@@ -2,9 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
-
+import SignInForm from "../components/SigninForm";
 import "../index.css";
-import Login from "../components/login";
 
 export function SignIn() {
     useEffect(() => {
@@ -13,7 +12,7 @@ export function SignIn() {
 
     return (
         <>
-            <Login />
+            <SignInForm />
         </>
     );
 }
