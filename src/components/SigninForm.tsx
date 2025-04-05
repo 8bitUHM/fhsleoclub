@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { auth } from "../lib/config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInForm = () => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -18,14 +20,18 @@ const SignInForm = () => {
 
     const handleClick = (e:FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsLoading((prev) => !prev);
-        setTimeout(() => { 
-            console.log('doing stuff') 
-            setIsLoading((prev) => !prev);
-        }, 2000);
+        setIsLoading(prev => !prev);
+        const { email, password } = formFields; 
+
+        if (email === '' || password === '') {
+            window.alert('Please fill out all information');
+        } else {
+            signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e)); 
+        }
+        
+        setIsLoading(prev => !prev);
     }
 
-    
     return (
         <>
             <div className="bg-red-900 min-h-screen flex items-center justify-center">
