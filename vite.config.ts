@@ -13,6 +13,7 @@ export default defineConfig({
         events: resolve(__dirname, "events/index.html"),
         members: resolve(__dirname, "members/index.html"),
         signin: resolve(__dirname, "signin/index.html"),
+        signup: resolve(__dirname, "signup/index.html"),
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
       },
     },
