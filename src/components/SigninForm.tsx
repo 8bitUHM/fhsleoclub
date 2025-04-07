@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { auth } from "../lib/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 const SignInForm = () => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -10,12 +10,10 @@ const SignInForm = () => {
     }); 
 
     const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-        setFormFields(() => (
-            {
-                ...formFields,
-                [e.target.name]: e.target.value,
-            }
-        ));
+        setFormFields(() => ({
+            ...formFields,
+            [e.target.name]: e.target.value,
+        }));
     }
 
     const handleClick = (e:FormEvent<HTMLButtonElement>) => {
@@ -26,7 +24,12 @@ const SignInForm = () => {
         if (email === '' || password === '') {
             window.alert('Please fill out all information');
         } else {
-            signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e)); 
+           signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e)); 
+           onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    window.location.href = "/";
+                }
+           })
         }
         
         setIsLoading(prev => !prev);
