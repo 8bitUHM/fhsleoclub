@@ -1,4 +1,30 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+
 const SignupForm = () => {
+    
+    const [ formFields, setFormFields ] = useState({
+        email: "",
+        password: "",
+        "confirm-password": "", 
+    }); 
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
+    
+    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+        setFormFields({
+            ...formFields,
+            [e.target.name]: e.target.value,
+        })
+    };
+
+    const handleSubmit = (e:FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setIsLoading(prev => !prev);
+        setTimeout(() => {
+            console.log('doing stuff');
+            setIsLoading(prev => !prev);
+        }, 2000);
+    }
+
 
     return (
         <>
@@ -16,17 +42,17 @@ const SignupForm = () => {
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-red-900">Your email</label>
-                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required />
+                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-red-900">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-red-900">Confirm password</label>
-                                    <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
+                                    <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-red-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required onChange={handleChange} />
                                 </div>
-                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
+                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleSubmit} disabled={isLoading} aria-disabled={isLoading}>Create an account</button>
                                 <p className="text-sm font-normal text-red-900">
                                     Already have an account? <a href="/signin/" className="font-medium text-primary-600 hover:underline">Sign in here</a>
                                 </p>
