@@ -100,9 +100,11 @@ export function Members() {
                             user ?
                               <>
                                 <div>
-                                  <a href="/update/">
-                                    <button type="button" className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">Update</button>
-                                  </a>
+                                  <button onClick={() => {
+                                    localStorage.setItem("advisorData", JSON.stringify(member));
+                                    window.location.href = "/update/";
+                                  }}
+                                    type="button" className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">Update</button>
                                 </div>
                               </> :
                               <p>User is not logged in</p>

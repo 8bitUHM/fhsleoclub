@@ -1,39 +1,77 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { auth } from "../lib/config";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+// import { ChangeEvent, FormEvent, useState } from "react";
+// import { auth } from "../lib/config";
+// import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { ref, update } from "firebase/database";
+import { db } from "../lib/config";
 
 const Update = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [formFields, setFormFields] = useState({
-        email: "",
-        password: "",
-    });
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [formFields, setFormFields] = useState({
+    //     email: "",
+    //     password: "",
+    // });
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormFields(() => ({
-            ...formFields,
-            [e.target.name]: e.target.value,
-        }));
-    }
+    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setFormFields(() => ({
+    //         ...formFields,
+    //         [e.target.name]: e.target.value,
+    //     }));
+    // }
 
-    const handleClick = (e: FormEvent<HTMLButtonElement>) => {
+    // const handleClick = (e: FormEvent<HTMLButtonElement>) => {
+    //     e.preventDefault();
+    //     setIsLoading(prev => !prev);
+    //     const { email, password } = formFields;
+
+    //     if (email === '' || password === '') {
+    //         window.alert('Please fill out all information');
+    //     } else {
+    //         signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e));
+    //         onAuthStateChanged(auth, (user) => {
+    //             if (user) {
+    //                 window.location.href = "/";
+    //             }
+    //         })
+    //     }
+
+    //     setIsLoading(prev => !prev);
+    // }
+
+    const [advisor, setAdvisor] = useState({ name: "", email: "", role: "" });
+
+    useEffect(() => {
+        const stored = localStorage.getItem("advisorData");
+        if (stored) {
+            setAdvisor(JSON.parse(stored));
+        }
+    }, []);
+
+    const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(prev => !prev);
-        const { email, password } = formFields;
 
-        if (email === '' || password === '') {
-            window.alert('Please fill out all information');
-        } else {
-            signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e));
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    window.location.href = "/";
-                }
-            })
+        if (!advisor.email) {
+            alert("Missing email. Please fill out all fields.");
+            return;
         }
 
-        setIsLoading(prev => !prev);
-    }
+        const emailKey = advisor.email.replace(/\./g, "_");
+        const advisorRef = ref(db, `club-members/${emailKey}`);
+
+        update(advisorRef, {
+            name: advisor.name,
+            role: advisor.role,
+            email: advisor.email,
+        })
+            .then(() => {
+                alert("Advisor info updated successfully!");
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                console.error("Update failed:", error);
+                alert("Something went wrong. Please try again.");
+            });
+    };
 
     return (
         <>
@@ -47,18 +85,18 @@ const Update = () => {
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-red-900">Name</label>
-                                    <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Name of person" required onChange={handleChange} />
+                                    <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder={advisor.name} />
                                 </div>
                                 <div>
                                     <label htmlFor="role" className="block mb-2 text-sm font-medium text-red-900">Role</label>
-                                    <input type="text" name="role" id="role" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Role of person" required onChange={handleChange} />
+                                    <input type="text" name="role" id="role" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder={advisor.role} />
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-red-900">Email</label>
-                                    <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Email of person" required onChange={handleChange} />
+                                    <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder={advisor.email} />
                                 </div>
 
-                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleClick} disabled={isLoading} aria-disabled={isLoading}>Update</button>
+                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">Update</button>
 
                                 <a href="/" className="font-medium text-red-900 text-sm block hover:underline">Back to home</a>
                             </form>
