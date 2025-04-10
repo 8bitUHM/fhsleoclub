@@ -47,31 +47,31 @@ const Update = () => {
         }
     }, []);
 
-    const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
 
-        if (!advisor.email) {
-            alert("Missing email. Please fill out all fields.");
-            return;
-        }
+    //     if (!advisor.email) {
+    //         alert("Missing email. Please fill out all fields.");
+    //         return;
+    //     }
 
-        const emailKey = advisor.email.replace(/\./g, "_");
-        const advisorRef = ref(db, `club-members/${emailKey}`);
+    //     const emailKey = advisor.email.replace(/\./g, "_");
+    //     const advisorRef = ref(db, `club-members/${emailKey}`);
 
-        update(advisorRef, {
-            name: advisor.name,
-            role: advisor.role,
-            email: advisor.email,
-        })
-            .then(() => {
-                alert("Advisor info updated successfully!");
-                window.location.href = "/";
-            })
-            .catch((error) => {
-                console.error("Update failed:", error);
-                alert("Something went wrong. Please try again.");
-            });
-    };
+    //     update(advisorRef, {
+    //         name: advisor.name,
+    //         role: advisor.role,
+    //         email: advisor.email,
+    //     })
+    //         .then(() => {
+    //             alert("Advisor info updated successfully!");
+    //             window.location.href = "/";
+    //         })
+    //         .catch((error) => {
+    //             console.error("Update failed:", error);
+    //             alert("Something went wrong. Please try again.");
+    //         });
+    // };
 
     return (
         <>
