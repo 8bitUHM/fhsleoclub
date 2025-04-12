@@ -2,23 +2,23 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
-import Update from "../components/Update";
+import AddMember from "../components/AddMember";
 import "../index.css";
 
-export function SignIn() {
+export function Add() {
     useEffect(() => {
         initFlowbite();
     }, []);
 
     return (
         <>
-            <Update />
+            <AddMember />
         </>
     );
 }
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <Update />
+        <Add />
     </StrictMode>
 );

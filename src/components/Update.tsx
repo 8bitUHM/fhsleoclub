@@ -119,7 +119,7 @@ const Update = () => {
             <div className="bg-red-900 min-h-screen flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto w-[40rem] md:h-screen lg:py-0">
                     <div className="flex items-center mb-6 text-2xl font-semibold text-white">
-                        Update the user
+                        Update the member
                     </div>
                     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-8 space-y-4 md:space-y-6 sm:p-8">

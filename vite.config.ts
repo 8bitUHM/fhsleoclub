@@ -15,6 +15,7 @@ export default defineConfig({
         signin: resolve(__dirname, "signin/index.html"),
         signup: resolve(__dirname, "signup/index.html"),
         update: resolve(__dirname, "update/index.html"),
+        add: resolve(__dirname, "add/index.html"),
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
       },
     },
