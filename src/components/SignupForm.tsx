@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-
+import { ref, get } from "firebase/database";
+import { auth } from "../lib/config";
+import { onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "../lib/config";
 const SignupForm = () => {
     
     const [ formFields, setFormFields ] = useState({
@@ -19,10 +22,28 @@ const SignupForm = () => {
     const handleSubmit = (e:FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsLoading(prev => !prev);
-        setTimeout(() => {
-            console.log('doing stuff');
-            setIsLoading(prev => !prev);
-        }, 2000);
+        const { email, password } = formFields;
+        const confirmPassword = formFields['confirm-password'];
+        
+        const authorizedMemberRef = ref(db, `authorized-members/${email.split('@')[0]}`)
+        const usersRef = ref(db, 'users');
+
+        if (email.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+            window.alert('Please fill out all required fields');
+        } else if (password !== confirmPassword) {
+            window.alert('Passwords do not match up');
+        } else {
+            get(authorizedMemberRef)
+            .then((value) => {
+                if (!value.exists() || !(value.child('email').val() === email)) {
+                    window.alert('You are not authorized to log into site. Please contact site admin if you believe this is a mistake');
+                } else {
+                    window.alert('authorized user. creating account...');
+                }
+            })
+        }
+
+        setIsLoading(prev => !prev);
     }
 
 
