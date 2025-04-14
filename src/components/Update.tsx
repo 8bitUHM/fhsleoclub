@@ -1,10 +1,6 @@
-// import { ChangeEvent, FormEvent, useState } from "react";
-// import { auth } from "../lib/config";
-// import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { clubMembersRefs } from "../lib/dbRefs";
-import { Member } from "../lib/types";
-import { child, onValue, set } from "firebase/database";
+import { child } from "firebase/database";
 
 import { ref, update } from "firebase/database";
 import { db } from "../lib/config";
@@ -41,7 +37,6 @@ const Update = () => {
     };
 
     const handleClick = () => {
-        // Your function logic here
         console.log(userRef);
     };
 
