@@ -10,42 +10,11 @@ import { ref, update } from "firebase/database";
 import { db } from "../lib/config";
 
 const Update = () => {
-    // const [isLoading, setIsLoading] = useState<boolean>(false);
-    // const [formFields, setFormFields] = useState({
-    //     email: "",
-    //     password: "",
-    // });
-
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setFormFields(() => ({
-    //         ...formFields,
-    //         [e.target.name]: e.target.value,
-    //     }));
-    // }
-
-    // const handleClick = (e: FormEvent<HTMLButtonElement>) => {
-    //     e.preventDefault();
-    //     setIsLoading(prev => !prev);
-    //     const { email, password } = formFields;
-
-    //     if (email === '' || password === '') {
-    //         window.alert('Please fill out all information');
-    //     } else {
-    //         signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e));
-    //         onAuthStateChanged(auth, (user) => {
-    //             if (user) {
-    //                 window.location.href = "/";
-    //             }
-    //         })
-    //     }
-
-    //     setIsLoading(prev => !prev);
-    // }
-
     const [advisor, setAdvisor] = useState({ name: "", email: "", role: "" });
 
     const userEmail = "cindy_mercado@farringtonhighschool_org";
     const userRef = child(clubMembersRefs, `club-members/${userEmail}`);
+    const memberRef = ref(db, `clubMembers/${userEmail}`);
 
     useEffect(() => {
         const stored = localStorage.getItem("advisorData");
@@ -57,7 +26,7 @@ const Update = () => {
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
 
-        update(userRef, {
+        update(memberRef, {
             email: "cindy_mercado@farringtonhighschool.org",
             name: "Bob",
             role: "club advisor",
@@ -66,7 +35,7 @@ const Update = () => {
                 console.log("Cindy's data updated successfully");
             })
             .catch((err) => {
-                console.log(userRef);
+                console.log(memberRef);
                 console.error("Error updating Cindy's data:", err);
             });
     };
