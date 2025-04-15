@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { ref, get } from "firebase/database";
+import { get, set } from "firebase/database";
 import { auth } from "../lib/config";
-import { onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
-import { db } from "../lib/config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getChildRef, authorizedMembersRef, usersRef } from "../lib/dbRefs";
 const SignupForm = () => {
     
     const [ formFields, setFormFields ] = useState({
@@ -19,28 +19,36 @@ const SignupForm = () => {
         })
     };
 
-    const handleSubmit = (e:FormEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (e:FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsLoading(prev => !prev);
         const { email, password } = formFields;
         const confirmPassword = formFields['confirm-password'];
         
-        const authorizedMemberRef = ref(db, `authorized-members/${email.split('@')[0]}`)
-        const usersRef = ref(db, 'users');
+        try {
+            if (email.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+                throw 'Please fill out all required information';
+            }
+            
+            if (confirmPassword !== password) {
+                throw 'Passwords do not match up';
+            }
+            
+            const authorizedMember = getChildRef(authorizedMembersRef, email.split('@')[0]);
+            const value = await get(authorizedMember);
+            
+            if (!value.exists() || value.child('email').val() !== email) {
+                throw 'You are not an authorized member. Please contact site admin if you believe this is a mistake';
+            }
 
-        if (email.length === 0 || password.length === 0 || confirmPassword.length === 0) {
-            window.alert('Please fill out all required fields');
-        } else if (password !== confirmPassword) {
-            window.alert('Passwords do not match up');
-        } else {
-            get(authorizedMemberRef)
-            .then((value) => {
-                if (!value.exists() || !(value.child('email').val() === email)) {
-                    window.alert('You are not authorized to log into site. Please contact site admin if you believe this is a mistake');
-                } else {
-                    window.alert('authorized user. creating account...');
-                }
-            })
+            const userCred = await createUserWithEmailAndPassword(auth, email, password); 
+            
+            const user = getChildRef(usersRef, userCred.user.uid);
+            set(user, value.child('admin').val());
+            
+            window.location.href = "/";
+        } catch (err) {
+            alert(err);
         }
 
         setIsLoading(prev => !prev);
