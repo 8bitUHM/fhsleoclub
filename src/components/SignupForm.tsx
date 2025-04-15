@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-
+import { get, set } from "firebase/database";
+import { auth } from "../lib/config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getChildRef, authorizedMembersRef, usersRef } from "../lib/dbRefs";
 const SignupForm = () => {
     
     const [ formFields, setFormFields ] = useState({
@@ -16,13 +19,39 @@ const SignupForm = () => {
         })
     };
 
-    const handleSubmit = (e:FormEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (e:FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsLoading(prev => !prev);
-        setTimeout(() => {
-            console.log('doing stuff');
-            setIsLoading(prev => !prev);
-        }, 2000);
+        const { email, password } = formFields;
+        const confirmPassword = formFields['confirm-password'];
+        
+        try {
+            if (email.length === 0 || password.length === 0 || confirmPassword.length === 0) {
+                throw 'Please fill out all required information';
+            }
+            
+            if (confirmPassword !== password) {
+                throw 'Passwords do not match up';
+            }
+            
+            const authorizedMember = getChildRef(authorizedMembersRef, email.split('@')[0]);
+            const value = await get(authorizedMember);
+            
+            if (!value.exists() || value.child('email').val() !== email) {
+                throw 'You are not an authorized member. Please contact site admin if you believe this is a mistake';
+            }
+
+            const userCred = await createUserWithEmailAndPassword(auth, email, password); 
+            
+            const user = getChildRef(usersRef, userCred.user.uid);
+            set(user, value.child('admin').val());
+            
+            window.location.href = "/";
+        } catch (err) {
+            alert(err);
+        }
+
+        setIsLoading(prev => !prev);
     }
 
 
