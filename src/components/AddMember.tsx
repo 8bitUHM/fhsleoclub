@@ -20,12 +20,17 @@ const AddMember = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const emailKey = member.email.replace(/\./g, "_");
+
         e.preventDefault();
         setLoading(true);
         try {
-            await push(clubMembersRefs, member);
+            await push(clubMembersRefs, {
+                [emailKey]: member
+            });
             alert("Member added successfully!");
             setMember({ name: "", role: "", email: "" });
+            window.location.href = "/members/";
         } catch (error) {
             console.error("Error adding member:", error);
             alert("Failed to add member.");
