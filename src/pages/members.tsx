@@ -42,6 +42,9 @@ export function Members() {
     const unsubscribe = onAuthStateChanged(auth, (aUser) => {
       setUser(aUser);
       setIsReady(true);
+      console.log("this is aUser: " + aUser);
+      console.log("this is user: " + user);
+      console.log("this is auth: " + auth);
     }, (error) => {
       window.alert(error);
       setIsReady(true);
@@ -86,6 +89,11 @@ export function Members() {
         console.error("Error deleting member:", error);
       });
   };
+
+  const handleTest = () => {
+    console.log("this is user2: " + user);
+    console.log("this is auth2: " + auth);
+  }
 
   return (
     <>
@@ -287,7 +295,7 @@ export function Members() {
                                       </a>
                                     </div>
                                     <div>
-                                      <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-700 border-2 border-white focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">Delete</button>
+                                      <button onClick={handleTest} data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-700 border-2 border-white focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">Delete</button>
                                     </div>
 
                                     <div id="popup-modal" tabIndex={-1} className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
