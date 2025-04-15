@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { auth } from "../lib/config";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInForm = () => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -16,20 +16,20 @@ const SignInForm = () => {
         }));
     }
 
-    const handleClick = (e:FormEvent<HTMLButtonElement>) => {
+    const handleClick = async (e:FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsLoading(prev => !prev);
         const { email, password } = formFields; 
-
-        if (email === '' || password === '') {
-            window.alert('Please fill out all information');
-        } else {
-           signInWithEmailAndPassword(auth, email, password).catch((e) => window.alert(e)); 
-           onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    window.location.href = "/";
-                }
-           })
+        
+        try {
+            if (email.length === 0 || password.length === 0) {
+                throw 'Please fill out all information';
+            }
+            
+            await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = "/";
+        } catch (err) {
+            alert(err);
         }
         
         setIsLoading(prev => !prev);
