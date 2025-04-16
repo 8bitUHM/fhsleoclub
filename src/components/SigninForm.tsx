@@ -3,35 +3,42 @@ import { auth } from "../lib/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInForm = () => {
-    const [ isLoading, setIsLoading ] = useState<boolean>(false);
-    const [ formFields, setFormFields ] = useState({
+    const [message, setMessage] = useState("Test error message");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [formFields, setFormFields] = useState({
         email: "",
         password: "",
-    }); 
+    });
+    const [showMessage, setShowMessage] = useState(false);
 
-    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormFields(() => ({
             ...formFields,
             [e.target.name]: e.target.value,
         }));
     }
 
-    const handleClick = async (e:FormEvent<HTMLButtonElement>) => {
+    const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsLoading(prev => !prev);
-        const { email, password } = formFields; 
-        
+        const { email, password } = formFields;
+
         try {
             if (email.length === 0 || password.length === 0) {
-                throw 'Please fill out all information';
+                setShowMessage(true);
+                setMessage("Please fill out all information");
             }
-            
+
             await signInWithEmailAndPassword(auth, email, password);
             window.location.href = "/";
-        } catch (err) {
+        } catch (err: any) {
             alert(err);
+            console.log(err);
+            if (err.code === "auth/invalid-email") {
+                setMessage("It must be a valid email");
+            }
         }
-        
+
         setIsLoading(prev => !prev);
     }
 
@@ -51,16 +58,20 @@ const SignInForm = () => {
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-red-900">Your email</label>
-                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required onChange={handleChange}/>
+                                    <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-red-900">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required onChange={handleChange}/>
+                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required onChange={handleChange} />
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <a href="#" className="text-sm font-medium text-red-900 hover:underline">Forgot password?</a>
                                     <a href="/signup/" className="text-sm font-medium text-red-900 hover:underline">Don't have an account? Sign up here</a>
+                                </div>
+
+                                <div className={showMessage ? '' : 'hidden'}>
+                                    <p className="text-sm font-medium text-center text-red-500">{message}</p>
                                 </div>
 
                                 <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleClick} disabled={isLoading} aria-disabled={isLoading}>Sign in</button>
