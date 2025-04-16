@@ -47,7 +47,7 @@ const AddMember = () => {
         setLoading(true);
         try {
 
-            const memberRef = ref(db, `clubMembers/${emailKey}`);
+            const memberRef = ref(db, `club-members/${emailKey}`);
             await set(memberRef, member);
 
             alert("Member added successfully!");

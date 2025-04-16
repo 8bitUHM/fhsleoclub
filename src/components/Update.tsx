@@ -12,7 +12,7 @@ const Update = () => {
 
     const userEmail = "cindy_mercado@farringtonhighschool_org";
     const userRef = child(clubMembersRefs, `club-members/${userEmail}`);
-    const memberRef = ref(db, `clubMembers/${userEmail}`);
+    const memberRef = ref(db, `club-members/${userEmail}`);
 
     const [user, setUser] = useState<User | null>(null);
     const [isReady, setIsReady] = useState(false);
@@ -42,7 +42,7 @@ const Update = () => {
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
 
-        set(userRef, {
+        set(memberRef, {
             email: "cindy_mercado@farringtonhighschool.org",
             name: "Bob",
             role: "club advisor",
