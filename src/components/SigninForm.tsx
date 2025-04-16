@@ -24,18 +24,25 @@ const SignInForm = () => {
         const { email, password } = formFields;
 
         try {
-            if (email.length === 0 || password.length === 0) {
-                setShowMessage(true);
-                setMessage("Please fill out all information");
-            }
-
             await signInWithEmailAndPassword(auth, email, password);
             window.location.href = "/";
         } catch (err: any) {
             alert(err);
-            console.log(err);
-            if (err.code === "auth/invalid-email") {
-                setMessage("It must be a valid email");
+            setShowMessage(true);
+            switch (err.code) {
+                case "auth/invalid-email":
+                    if (email.length === 0 || password.length === 0) {
+                        setShowMessage(true);
+                        setMessage("Please fill out all information");
+                    } else {
+                        setMessage("It must be a valid email");
+                    }
+                    break;
+                case "auth/invalid-credential":
+                    setMessage("Invalid email or password");
+                    break;
+                default:
+                    setMessage("Please try again later");
             }
         }
 
