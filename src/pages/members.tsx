@@ -42,9 +42,6 @@ export function Members() {
     const unsubscribe = onAuthStateChanged(auth, (aUser) => {
       setUser(aUser);
       setIsReady(true);
-      console.log("this is aUser: " + aUser);
-      console.log("this is user: " + user);
-      console.log("this is auth: " + auth);
     }, (error) => {
       window.alert(error);
       setIsReady(true);
@@ -78,8 +75,6 @@ export function Members() {
   const handleDelete = (email: string) => {
     const encodedEmail = email.replace(/\./g, "_");
     const memberRef = child(clubMembersRefs, encodedEmail);
-    console.log(encodedEmail);
-    console.log(memberRef);
     remove(memberRef)
       .then(() => {
         console.log("Member deleted successfully.");
@@ -90,11 +85,6 @@ export function Members() {
       });
   };
 
-  const handleTest = () => {
-    console.log("this is user2: " + user);
-    console.log("this is auth2: " + auth);
-  }
-
   return (
     <>
       {isReady && (
@@ -102,7 +92,6 @@ export function Members() {
           <AuthContext.Provider value={user}>
             <Navbar />
             <Header />
-
             {
               !isLoading && (
                 <>
@@ -164,7 +153,7 @@ export function Members() {
                                         <svg className="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                         </svg>
-                                        <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete this user.</h3>
+                                        <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete {selectedMember?.name}</h3>
                                         <button onClick={() => {
                                           if (selectedMember)
                                             handleDelete(selectedMember.email);
@@ -189,13 +178,11 @@ export function Members() {
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
                     {user ?
                       <>
-
                         <div>
                           <a href="/add/">
                             <button type="button" className="text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-6">Add Member</button>
                           </a>
                         </div>
-
                       </> : null
                     }
                     <div className="grid grid-cols-2 gap-x-4 justify-center items-center md:grid-cols-3 lg:grid-cols-6">
@@ -240,7 +227,7 @@ export function Members() {
                                           <svg className="mx-auto mb-4 text-gray-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                           </svg>
-                                          <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete this user.</h3>
+                                          <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete this {member.name}.</h3>
                                           <button onClick={() => {
                                             if (selectedMember)
                                               handleDelete(selectedMember.email);
@@ -266,13 +253,11 @@ export function Members() {
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Club Members</h2>
                     {user ?
                       <>
-
                         <div>
                           <a href="/add/">
                             <button type="button" className="text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-6">Add Member</button>
                           </a>
                         </div>
-
                       </> : null
                     }
                     <div className="flex justify-center">

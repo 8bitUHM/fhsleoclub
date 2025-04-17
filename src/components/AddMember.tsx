@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { set } from "firebase/database";
+import { set, get } from "firebase/database";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
 import type { Member } from "../lib/types";
 import { auth } from "../lib/config";
-import { User, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const AddMember = () => {
     const [member, setMember] = useState<Member>({
@@ -12,8 +12,9 @@ const AddMember = () => {
         email: "",
     });
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [message, setMessage] = useState("Test error message");
+    const [showMessage, setShowMessage] = useState(false);
 
     const handleChange = (e: { target: { name: string; value: string } }) => {
         setMember((prev) => ({
@@ -22,37 +23,50 @@ const AddMember = () => {
         }));
     };
 
+    //Kicks the user back to home page if they are not logged in
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (aUser) => {
-            setUser(aUser);
-        }, (error) => {
-            window.alert(error);
-        })
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser?.email === undefined) {
+                window.location.href = "/";
+            }
+        });
 
         return () => unsubscribe();
-    }, [])
+    }, []);
 
+    // Updates the member
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         const emailKey = member.email.replace(/\./g, "_");
 
         e.preventDefault();
         setLoading(true);
         try {
-            // const memberRef = ref(db, `club-members/${emailKey}`);
             const memberRef = getChildRef(clubMembersRefs, emailKey);
+
+            //checks if the user's email exists in the database.
+            const snapshot = await get(memberRef);
+            if (snapshot.exists()) {
+                setShowMessage(true);
+                setMessage("A member with this email already exists.");
+                setLoading(false);
+                return;
+            }
+
             await set(memberRef, member);
 
             alert("Member added successfully!");
             setMember({ name: "", role: "", email: "" });
             window.location.href = "/members/";
+
         } catch (error) {
-            if (user) {
-                console.log("Signed in as:", user.email);
+            // Checks if email is not a valid email or if empty
+            setShowMessage(true);
+            if (member.email.length === 0) {
+                setMessage("Please add an email");
             } else {
-                console.log("Not signed in.");
+                setMessage("Email must be valid");
             }
             console.error("Error adding member:", error);
-            alert("Failed to add member.");
         }
         setLoading(false);
     };
@@ -66,6 +80,9 @@ const AddMember = () => {
                     </div>
                     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-8 space-y-4 md:space-y-6 sm:p-8">
+                            <div className={showMessage ? '' : 'hidden'}>
+                                <p className="text-md font-medium text-center text-red-500">{message}</p>
+                            </div>
                             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                                 <div>
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-red-900">Name</label>

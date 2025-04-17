@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
 import { set } from "firebase/database";
+import { auth } from "../lib/config";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Update = () => {
     const [member, setMember] = useState({ name: "", email: "", role: "" });
-
-    const userEmail = "cindy_mercado@farringtonhighschool_org";
-    // console.log(typeof (member.email))
-
     const [showDropdown, setShowDropdown] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser?.email === undefined) {
+                window.location.href = "/";
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const stored = localStorage.getItem("memberData");
@@ -33,7 +41,7 @@ const Update = () => {
                 window.location.href = "/members/";
             })
             .catch((err) => {
-                console.error("Error updating Cindy's data:", err);
+                console.error("Error updating member's data:", err);
             });
     };
 
