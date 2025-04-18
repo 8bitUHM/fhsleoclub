@@ -120,7 +120,7 @@ const AddMember = () => {
 
                                 <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Adding..." : "Add Member"}</button>
 
-                                <a href="/" className="font-medium text-red-900 text-sm block hover:underline">Back to home</a>
+                                <a href="/members/" className="font-medium text-red-900 text-sm block hover:underline">Back to members</a>
                             </form>
                         </div>
                     </div>

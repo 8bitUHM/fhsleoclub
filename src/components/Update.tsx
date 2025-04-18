@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
-import { set, remove } from "firebase/database";
+import { set, remove, get } from "firebase/database";
 import { auth } from "../lib/config";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -40,7 +40,17 @@ const Update = () => {
         try {
             const memberRef = getChildRef(clubMembersRefs, emailKey);
 
-            //Updates the member's data as long as it doesn't run into any errors
+            // checks if the user's email exists in the database. if statement is added in so users can still update member data with the same email.
+            if (emailKey !== prevEmailKey) {
+                const snapshot = await get(memberRef);
+                if (snapshot.exists()) {
+                    setShowMessage(true);
+                    setMessage("A member with this email already exists.");
+                    return;
+                }
+            }
+
+            // Updates the member's data as long as it doesn't run into any errors
             await set(memberRef, {
                 name: member.name,
                 email: member.email,
@@ -49,7 +59,7 @@ const Update = () => {
             console.log("Members's data updated successfully");
 
             // This removes the previous member data only if the current email and previous email are not the same
-            if (emailKey != prevEmailKey) {
+            if (emailKey !== prevEmailKey) {
                 const prevMemberRef = getChildRef(clubMembersRefs, prevEmailKey);
                 remove(prevMemberRef);
             }
@@ -119,7 +129,7 @@ const Update = () => {
 
                                 <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">Update</button>
 
-                                <a href="/" className="font-medium text-red-900 text-sm block hover:underline">Back to home</a>
+                                <a href="/members/" className="font-medium text-red-900 text-sm block hover:underline">Back to members</a>
                             </form>
                         </div>
                     </div>
