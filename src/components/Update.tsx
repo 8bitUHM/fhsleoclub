@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
-import { set } from "firebase/database";
+import { set, remove } from "firebase/database";
 import { auth } from "../lib/config";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -9,6 +9,7 @@ const Update = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [message, setMessage] = useState("Test error message");
     const [showMessage, setShowMessage] = useState(false);
+    const [previousEmail, setPreviousEmail] = useState("");
 
     //Kicks the user back to home page if they are not logged in
     useEffect(() => {
@@ -21,39 +22,50 @@ const Update = () => {
         return () => unsubscribe();
     }, []);
 
+    //This grabs what the user clicked on to "update" from members page
     useEffect(() => {
         const stored = localStorage.getItem("memberData");
         if (stored) {
-            setMember(JSON.parse(stored));
+            const parsed = JSON.parse(stored);
+            setPreviousEmail(parsed.email);
+            setMember(parsed);
         }
     }, []);
 
-    const handleUpdate = (e: React.FormEvent) => {
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const emailKey = member.email.replace(/\./g, "_");
+        const prevEmailKey = previousEmail.replace(/\./g, "_");
 
-        const userEmailKey = member.email.replace(/\./g, "_");
-        const memberRef = getChildRef(clubMembersRefs, userEmailKey);
+        try {
+            const memberRef = getChildRef(clubMembersRefs, emailKey);
 
-        set(memberRef, {
-            name: member.name,
-            email: member.email,
-            role: member.role,
-        })
-            .then(() => {
-                console.log("Members's data updated successfully");
-                window.location.href = "/members/";
+            //Updates the member's data as long as it doesn't run into any errors
+            await set(memberRef, {
+                name: member.name,
+                email: member.email,
+                role: member.role,
             })
-            .catch((err) => {
-                console.error("Error updating member's data:", err);
-                setShowMessage(true);
-                if (member.name.length === 0 || member.role.length === 0 || member.email.length === 0) {
-                    setMessage("Please fill in the blanks");
-                    console.log("AAAAAAAAAA");
-                } else {
-                    setMessage("Email must be valid");
-                    console.log("BBBBBBBBBBBBB");
-                }
-            });
+            console.log("Members's data updated successfully");
+
+            // This removes the previous member data only if the current email and previous email are not the same
+            if (emailKey != prevEmailKey) {
+                const prevMemberRef = getChildRef(clubMembersRefs, prevEmailKey);
+                remove(prevMemberRef);
+            }
+
+            window.location.href = "/members/";
+
+        } catch (err) {
+            // Checks if the fields are empty or if email is an invalid entry
+            console.error("Error updating member's data:", err);
+            setShowMessage(true);
+            if (member.name.length === 0 || member.role.length === 0 || member.email.length === 0) {
+                setMessage("Please fill in the blanks");
+            } else {
+                setMessage("Email must be valid");
+            }
+        }
     };
 
     return (
@@ -65,7 +77,7 @@ const Update = () => {
                     </div>
                     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-8 space-y-4 md:space-y-6 sm:p-8">
-                            <form className="space-y-4 md:space-y-6" action="#">
+                            <form className="space-y-4 md:space-y-6" onSubmit={handleUpdate}>
                                 <div>
                                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-red-900">Name</label>
                                     <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={member.name} onChange={(e) => setMember({ ...member, name: e.target.value })} placeholder={member.name} />
@@ -105,7 +117,7 @@ const Update = () => {
                                     <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={member.email} onChange={(e) => setMember({ ...member, email: e.target.value })} placeholder={member.email} />
                                 </div>
 
-                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleUpdate}>Update</button>
+                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">Update</button>
 
                                 <a href="/" className="font-medium text-red-900 text-sm block hover:underline">Back to home</a>
                             </form>
