@@ -78,7 +78,6 @@ export function Members() {
     remove(memberRef)
       .then(() => {
         console.log("Member deleted successfully.");
-        window.location.reload();
       })
       .catch((error) => {
         console.error("Error deleting member:", error);
