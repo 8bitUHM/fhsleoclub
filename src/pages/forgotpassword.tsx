@@ -82,7 +82,7 @@ export function ForgotPassword() {
                 Reset Password
               </button>
               <section className="text-sm font-medium text-red-900 space-y-2 *:block">
-                <a href="/signin/" className="hover:underline">
+                <a href="/auth/signin/" className="hover:underline">
                   Sign In
                 </a>
                 <a href="/" className="hover:underline">
@@ -108,7 +108,7 @@ export function ForgotPassword() {
               Junk/Spam Folder
             </p>
             <a
-              href="/signin/"
+              href="/auth/signin/"
               data-modal-target="modal"
               data-modal-hide="modal"
               className="p-2 bg-red-700 rounded-lg text-white text-sm font-semibold tracking-wide focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-red-600 text-center"
