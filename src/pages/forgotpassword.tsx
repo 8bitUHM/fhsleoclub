@@ -1,4 +1,4 @@
-import { FormEvent, StrictMode, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, StrictMode, useEffect, useState } from "react";
 import { initFlowbite } from "flowbite";
 import { createRoot } from "react-dom/client";
 import { sendPasswordResetEmail } from "firebase/auth";
@@ -10,25 +10,30 @@ export function ForgotPassword() {
     initFlowbite();
   });
 
-  const emailRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
   // Checks for valid email patterns
   const regex = /^[\w.-]+@\w+(?:\.\w+){1,2}$/;
 
   const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!emailRef.current!.value) {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.ariaDisabled = "true";
+    if (!email) {
       setError("Please fill out email");
-    } else if (!regex.test(emailRef.current!.value)) {
+    } else if (!regex.test(email)) {
       setError("Please enter a valid email");
     } else {
-      setError("");
       try {
-        alert("Doing stuff");
+        await sendPasswordResetEmail(auth, email);
+        setError("");
       } catch (e) {
         setError((e as Error).message);
       }
     }
+    btn.disabled = false;
+    btn.ariaDisabled = "false";
   };
 
   return (
@@ -47,7 +52,7 @@ export function ForgotPassword() {
             <h2 className="mb-1 text-xl font-bold leading-tight text-red-900 md:text-2xl">
               Password Reset via Email
             </h2>
-            <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5">
+            <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
               <div>
                 <label
                   htmlFor="email"
@@ -62,12 +67,14 @@ export function ForgotPassword() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Your email"
                   required
-                  ref={emailRef}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                 />
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className="w-full text-white bg-red-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-red-600 disabled:cursor-progress"
                 onClick={handleClick}
                 data-modal-target="modal"
                 data-modal-show="modal"
@@ -102,6 +109,7 @@ export function ForgotPassword() {
             </p>
             <a
               href="/signin/"
+              data-modal-target="modal"
               data-modal-hide="modal"
               className="p-2 bg-red-700 rounded-lg text-white text-sm font-semibold tracking-wide focus:outline-none focus:ring-4 focus:ring-blue-300 hover:bg-red-600 text-center"
             >
