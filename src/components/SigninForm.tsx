@@ -73,8 +73,8 @@ const SignInForm = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <a href="/forgot-password/" className="text-sm font-medium text-red-900 hover:underline w-fit">Forgot password?</a>
-                                    <a href="/signup/" className="text-sm font-medium text-red-900 hover:underline">Don't have an account? Sign up here</a>
+                                    <a href="/auth/forgot-password/" className="text-sm font-medium text-red-900 hover:underline w-fit">Forgot password?</a>
+                                    <a href="/auth/signup/" className="text-sm font-medium text-red-900 hover:underline">Don't have an account? Sign up here</a>
                                 </div>
 
                                 <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleClick} disabled={isLoading || showMessage} aria-disabled={isLoading || showMessage}>Sign in</button>

@@ -75,7 +75,7 @@ const Navbar = () => {
                                  </div>
                              </>
                              :
-                             <a href="/signin/" className="text-red-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-4 py-2">Sign-In</a>
+                             <a href="/auth/signin/" className="text-red-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-4 py-2">Sign-In</a>
                         }
                     </div>
                 </div>
