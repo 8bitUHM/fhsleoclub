@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState} from "react";
 import { auth } from "../lib/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { AuthError } from "firebase/auth";
@@ -73,7 +73,7 @@ const SignInForm = () => {
                                 </div>
 
                                 <div className="flex flex-col gap-2">
-                                    <a href="#" className="text-sm font-medium text-red-900 hover:underline">Forgot password?</a>
+                                    <a href="/forgot-password/" className="text-sm font-medium text-red-900 hover:underline w-fit">Forgot password?</a>
                                     <a href="/signup/" className="text-sm font-medium text-red-900 hover:underline">Don't have an account? Sign up here</a>
                                 </div>
 

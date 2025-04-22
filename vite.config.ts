@@ -14,6 +14,7 @@ export default defineConfig({
         members: resolve(__dirname, "members/index.html"),
         signin: resolve(__dirname, "signin/index.html"),
         signup: resolve(__dirname, "signup/index.html"),
+        forgot: resolve(__dirname, "forgot-password/index.html"),
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
       },
     },
