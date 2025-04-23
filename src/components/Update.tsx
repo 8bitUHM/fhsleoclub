@@ -24,7 +24,7 @@ const Update = () => {
 
     //This grabs what the user clicked on to "update" from members page
     useEffect(() => {
-        const stored = localStorage.getItem("memberData");
+        const stored = sessionStorage.getItem("memberData");
         if (stored) {
             const parsed = JSON.parse(stored);
             setPreviousEmail(parsed.email);

@@ -113,7 +113,7 @@ export function Members() {
                             <>
                               <div>
                                 <button onClick={() => {
-                                  localStorage.setItem("memberData", JSON.stringify(member));
+                                  sessionStorage.setItem("memberData", JSON.stringify(member));
                                   window.location.href = "/update/";
                                 }}
                                   type="button" className="text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
@@ -201,7 +201,7 @@ export function Members() {
                                 <div>
                                   <a href="/update/">
                                     <button onClick={() => {
-                                      localStorage.setItem("memberData", JSON.stringify(member));
+                                      sessionStorage.setItem("memberData", JSON.stringify(member));
                                       window.location.href = "/update/";
                                     }} type="button" className="text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -286,7 +286,7 @@ export function Members() {
                                   <div>
                                     <a href="/update/">
                                       <button onClick={() => {
-                                        localStorage.setItem("memberData", JSON.stringify(member));
+                                        sessionStorage.setItem("memberData", JSON.stringify(member));
                                         window.location.href = "/update/";
                                       }} type="button" className="text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
