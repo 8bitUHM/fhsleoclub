@@ -83,7 +83,7 @@ const SignupForm = () => {
                                 </div>
                                 <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500" onClick={handleSubmit} disabled={isLoading} aria-disabled={isLoading}>Create an account</button>
                                 <p className="text-sm font-normal text-red-900">
-                                    Already have an account? <a href="/signin/" className="font-medium text-primary-600 hover:underline">Sign in here</a>
+                                    Already have an account? <a href="/auth/signin/" className="font-medium text-primary-600 hover:underline">Sign in here</a>
                                 </p>
                                 <a href="/" className="font-medium text-red-900 text-sm block hover:underline">Back to home</a>
                             </form>
