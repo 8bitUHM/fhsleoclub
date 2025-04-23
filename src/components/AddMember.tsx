@@ -51,7 +51,13 @@ const AddMember = () => {
                 return;
             }
 
-            await set(memberRef, member);
+            // makes all the characters in member.role lowercase
+            const memberRoleLower = {
+                ...member,
+                role: member.role.toLowerCase(),
+            };
+
+            await set(memberRef, memberRoleLower);
             setMember({ name: "", role: "", email: "" });
             window.location.href = "/members/";
 
