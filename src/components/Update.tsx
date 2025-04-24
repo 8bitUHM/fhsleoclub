@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
-import { set, remove, get } from "firebase/database";
+import { set, remove } from "firebase/database";
 import useAuthRedirect from "../lib/useAuthRedirect";
+import { useMemberValidation } from "../lib/useMemberValidation";
 
 const Update = () => {
     const [member, setMember] = useState({ name: "", email: "", role: "" });
     const [showDropdown, setShowDropdown] = useState(false);
-    const [message, setMessage] = useState("Test error message");
-    const [showMessage, setShowMessage] = useState(false);
     const [previousEmail, setPreviousEmail] = useState("");
+    const {
+        loading,
+        message,
+        showMessage,
+        setLoading,
+        setMessage,
+        setShowMessage,
+        checkIfMemberExists,
+    } = useMemberValidation();
 
     //Kicks the user back to home page if they are not logged in
     useAuthRedirect();
@@ -32,17 +40,14 @@ const Update = () => {
         const emailKey = member.email.replace(/\./g, "_");
         const prevEmailKey = previousEmail.replace(/\./g, "_");
 
+        setLoading(true);
         try {
             const memberRef = getChildRef(clubMembersRefs, emailKey);
 
             // checks if the user's email exists in the database. if statement is added in so users can still update member data with the same email.
             if (emailKey !== prevEmailKey) {
-                const snapshot = await get(memberRef);
-                if (snapshot.exists()) {
-                    setShowMessage(true);
-                    setMessage("A member with this email already exists.");
-                    return;
-                }
+                const exists = await checkIfMemberExists(member.email);
+                if (exists) return;
             }
 
             // Updates the member's data as long as it doesn't run into any errors
@@ -71,6 +76,7 @@ const Update = () => {
                 setMessage("Email must be valid");
             }
         }
+        setLoading(false);
     };
 
     return (
@@ -122,7 +128,7 @@ const Update = () => {
                                     <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={member.email} onChange={(e) => setMember({ ...member, email: e.target.value })} placeholder={member.email} />
                                 </div>
 
-                                <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">Update</button>
+                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
 
                                 <a href="/members/" className="font-medium text-red-900 text-sm block hover:underline">Back to members</a>
                             </form>

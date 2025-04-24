@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { set, get } from "firebase/database";
+import { set } from "firebase/database";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
 import type { Member } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
+import { useMemberValidation } from "../lib/useMemberValidation";
 
 const AddMember = () => {
     const [member, setMember] = useState<Member>({
@@ -10,10 +11,17 @@ const AddMember = () => {
         role: "",
         email: "",
     });
-    const [loading, setLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [message, setMessage] = useState("Test error message");
-    const [showMessage, setShowMessage] = useState(false);
+    const {
+        loading,
+        message,
+        showMessage,
+        setLoading,
+        setMessage,
+        setShowMessage,
+        checkIfMemberExists,
+    } = useMemberValidation();
+
 
     const handleChange = (e: { target: { name: string; value: string } }) => {
         setMember((prev) => ({
@@ -35,13 +43,8 @@ const AddMember = () => {
             const memberRef = getChildRef(clubMembersRefs, emailKey);
 
             //checks if the user's email exists in the database.
-            const snapshot = await get(memberRef);
-            if (snapshot.exists()) {
-                setShowMessage(true);
-                setMessage("A member with this email already exists.");
-                setLoading(false);
-                return;
-            }
+            const exists = await checkIfMemberExists(member.email);
+            if (exists) return;
 
             // makes all the characters in member.role lowercase
             const memberRoleLower = {

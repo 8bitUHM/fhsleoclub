@@ -16,7 +16,6 @@ import "../index.css";
 
 
 export function Members() {
-
   const [isLoading, setIsLoading] = useState(true);
   const [members, setMembers] = useState<Record<string, Member>>({});
   const [user, setUser] = useState<User | null>(null);
@@ -85,7 +84,6 @@ export function Members() {
                   {/* Advisors Section */}
                   <section className="bg-red-900 p-6 text-white text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Advisors</h2>
-
                     <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
                       {advisors.map((member) => (
                         <div key={member.email} className="mb-4 space-y-1">
@@ -96,10 +94,7 @@ export function Members() {
                           />
                         </div>
                       ))}
-
-                      {user && (
-                        <AddMemberButton />
-                      )}
+                      <AddMemberButton />
                     </div>
                   </section>
 
@@ -109,7 +104,6 @@ export function Members() {
                     <div className="grid grid-cols-2 gap-x-4 justify-center items-center md:grid-cols-3 lg:grid-cols-6">
                       {officers.sort((a, b) => Roles[a.role] - Roles[b.role]).map((member) => (
                         <div key={member.email} className="mb-4 space-y-1 grid grid-rows-[auto_auto_auto_auto] items-start">
-
                           <MemberData
                             member={member}
                             setSelectedMember={setSelectedMember}
@@ -117,9 +111,7 @@ export function Members() {
                           />
                         </div>
                       ))}
-                      {user && (
-                        <AddMemberButton />
-                      )}
+                      <AddMemberButton />
                     </div>
                   </section>
 
@@ -137,9 +129,7 @@ export function Members() {
                             />
                           </div>
                         ))}
-                        {user && (
-                          <AddMemberButton />
-                        )}
+                        <AddMemberButton />
                       </div>
                     </div>
                   </section>
