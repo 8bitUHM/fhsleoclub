@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { set, get } from "firebase/database";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
 import type { Member } from "../lib/types";
-import { auth } from "../lib/config";
-import { onAuthStateChanged } from "firebase/auth";
+import useAuthRedirect from "../lib/useAuthRedirect";
 
 const AddMember = () => {
     const [member, setMember] = useState<Member>({
@@ -24,14 +23,7 @@ const AddMember = () => {
     };
 
     //Kicks the user back to home page if they are not logged in
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser?.email === undefined) {
-                window.location.href = "/";
-            }
-        });
-        return () => unsubscribe();
-    }, []);
+    useAuthRedirect();
 
     // Updates the member
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,13 +55,13 @@ const AddMember = () => {
 
         } catch (error) {
             // Checks if the fields are empty or if email is an invalid entry
+            console.error("Error adding member:", error);
             setShowMessage(true);
             if (member.name.length === 0 || member.role.length === 0 || member.email.length === 0) {
                 setMessage("Please fill in the blanks");
             } else {
                 setMessage("Email must be valid");
             }
-            console.error("Error adding member:", error);
         }
         setLoading(false);
     };

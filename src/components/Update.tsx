@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { clubMembersRefs, getChildRef } from "../lib/dbRefs";
 import { set, remove, get } from "firebase/database";
-import { auth } from "../lib/config";
-import { onAuthStateChanged } from "firebase/auth";
+import useAuthRedirect from "../lib/useAuthRedirect";
 
 const Update = () => {
     const [member, setMember] = useState({ name: "", email: "", role: "" });
@@ -12,15 +11,7 @@ const Update = () => {
     const [previousEmail, setPreviousEmail] = useState("");
 
     //Kicks the user back to home page if they are not logged in
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser?.email === undefined) {
-                window.location.href = "/";
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
+    useAuthRedirect();
 
     //This grabs what the user clicked on to "update" from members page
     useEffect(() => {
