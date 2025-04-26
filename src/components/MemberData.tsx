@@ -39,7 +39,7 @@ const MemberData: React.FC<MemberDataProps> = ({ member, setSelectedMember, sele
       </div>
       {user && (
         <>
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center gap-2 mt-2">
             <div>
               <button onClick={() => {
                 sessionStorage.setItem("memberData", JSON.stringify(member));
