@@ -46,7 +46,7 @@ const SignupForm = () => {
             const value = await get(authorizedMember);
 
             if (!value.exists() || value.child('email').val() !== email) {
-                handleError('You are not an authorized member. Please contact site admin if you believe this is a mistake');
+                handleError('You are not an authorized member. Please contact the site admin if you believe this is a mistake');
                 return;
             }
 
