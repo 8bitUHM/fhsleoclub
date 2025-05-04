@@ -75,6 +75,10 @@ const UpdateEvent = () => {
         setLoading(false);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEvent({...event, [e.target.name]: e.target.value});
+    };
+
     return (
         <>
             <div className="bg-red-900 min-h-screen flex items-center justify-center">
@@ -87,27 +91,27 @@ const UpdateEvent = () => {
                             <form className="space-y-4 md:space-y-6" onSubmit={handleUpdate}>
                                 <div>
                                     <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
-                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={(e) => setEvent({ ...event, title: e.target.value })} placeholder={event.title} />
+                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleInputChange} placeholder={event.title} />
                                 </div>
                                 <div>
                                     <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
-                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={(e) => setEvent({ ...event, description: e.target.value })} placeholder={event.description} />
+                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleInputChange} placeholder={event.description} />
                                 </div>
                                 <div>
                                     <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
-                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={(e) => setEvent({ ...event, location: e.target.value })} placeholder={event.location} />
+                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleInputChange} placeholder={event.location} />
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={(e) => setEvent({ ...event, date: e.target.value })} />
+                                    <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleInputChange} />
                                 </div>
                                 <div>
                                     <label htmlFor="start-time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                                    <input type="text" name="start-time" id="start-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={(e) => setEvent({ ...event, start_time: e.target.value })} placeholder={event.start_time} />
+                                    <input type="text" name="start-time" id="start-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleInputChange} placeholder={event.start_time} />
                                 </div>
                                 <div>
                                     <label htmlFor="end-time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                                    <input type="text" name="end-time" id="end-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={(e) => setEvent({ ...event, end_time: e.target.value })} placeholder={event.end_time} />
+                                    <input type="text" name="end-time" id="end-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleInputChange} placeholder={event.end_time} />
                                 </div>
 
                                 <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
