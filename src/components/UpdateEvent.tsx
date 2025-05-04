@@ -5,22 +5,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/config";
 
 const UpdateEvent = () => {
-    const [member, setMember] = useState({ name: "", email: "", role: "" });
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [previousEmail, setPreviousEmail] = useState("");
-    // const [loading, setLoading] = useState(false);
-    // const [message, setMessage] = useState("Test error message");
-    // const [showMessage, setShowMessage] = useState(false);
-
-    // const {
-    //     loading,
-    //     message,
-    //     showMessage,
-    //     setLoading,
-    //     setMessage,
-    //     setShowMessage,
-    //     checkIfMemberExists,
-    // } = useMemberValidation();
+    const [event, setEvent] = useState({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("Test error message");
+    const [showMessage, setShowMessage] = useState(false);
 
     //Kicks the user back to home page if they are not logged in
     useEffect(() => {
@@ -35,32 +23,19 @@ const UpdateEvent = () => {
 
     //This grabs what the user clicked on to "update" from members page
     useEffect(() => {
-        const stored = sessionStorage.getItem("memberData");
+        const stored = sessionStorage.getItem("eventData");
         if (stored) {
             const parsed = JSON.parse(stored);
-            setPreviousEmail(parsed.email);
-            setMember(parsed);
+            setEvent(parsed);
         }
     }, []);
 
-    //Makes the first character of each word in role uppercase for UI display purposes
-    const capitalizeWords = (str: string) =>
-        str.replace(/\b\w/g, (char) => char.toUpperCase());
-
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const emailKey = member.email.replace(/\./g, "_");
-        const prevEmailKey = previousEmail.replace(/\./g, "_");
 
         setLoading(true);
         try {
-            const memberRef = getChildRef(eventRefs, emailKey);
-
-            // checks if the user's email exists in the database. if statement is added in so users can still update member data with the same email.
-            if (emailKey !== prevEmailKey) {
-                const exists = await checkIfMemberExists(member.email);
-                if (exists) return;
-            }
+            const eventRef = getChildRef(eventRefs, emailKey);
 
             // Updates the member's data as long as it doesn't run into any errors
             await set(memberRef, {
@@ -79,10 +54,10 @@ const UpdateEvent = () => {
             window.location.href = "/members/";
 
         } catch (err) {
-            // Checks if the fields are empty or if email is an invalid entry
-            console.error("Error updating member's data:", err);
+            // Checks if required fields are empty 
+            console.error("Error updating event data:", err);
             setShowMessage(true);
-            if (member.name.length === 0 || member.role.length === 0 || member.email.length === 0) {
+            if (event.title.length === 0 || member.role.length === 0 || member.email.length === 0) {
                 setMessage("Please fill in the blanks");
             } else {
                 setMessage("Email must be valid");
@@ -96,53 +71,39 @@ const UpdateEvent = () => {
             <div className="bg-red-900 min-h-screen flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto w-[40rem] md:h-screen lg:py-0">
                     <div className="flex items-center mb-6 text-2xl font-semibold text-white">
-                        Update the member
+                        Update the event
                     </div>
                     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-8 space-y-4 md:space-y-6 sm:p-8">
                             <form className="space-y-4 md:space-y-6" onSubmit={handleUpdate}>
                                 <div>
-                                    <label htmlFor="name" className="block mb-2 text-sm font-medium text-red-900">Name</label>
-                                    <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={member.name} onChange={(e) => setMember({ ...member, name: e.target.value })} placeholder={member.name} />
+                                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
+                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={(e) => setEvent({ ...event, title: e.target.value })} placeholder={event.title} />
                                 </div>
                                 <div>
-                                    <label htmlFor="role" className="block mb-2 text-sm font-medium text-red-900">Role</label>
-                                    <div className="relative inline-block w-full">
-                                        <button type="button" onClick={() => setShowDropdown(!showDropdown)} className="text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-left inline-flex justify-between items-center w-full">
-                                            {capitalizeWords(member.role) || "Select role"}
-                                            <svg className="w-2.5 h-2.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                            </svg>
-                                        </button>
-
-                                        {showDropdown && (
-                                            <div className="absolute z-10 mt-2 w-full bg-white divide-y divide-gray-100 rounded-lg shadow">
-                                                <ul className="py-2 text-sm text-red-900">
-                                                    {["Club Advisor", "President", "Vice President", "Secretary", "Treasurer", "Public Relations", "Member"].map((role) => (
-                                                        <li key={role}>
-                                                            <button type="button" onClick={() => {
-                                                                setMember({ ...member, role });
-                                                                setShowDropdown(false);
-                                                            }}
-                                                                className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                                                            >
-                                                                {role}
-                                                            </button>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
-                                    </div>
+                                    <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
+                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={(e) => setEvent({ ...event, description: e.target.value })} placeholder={event.description} />
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-red-900">Email</label>
-                                    <input type="text" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={member.email} onChange={(e) => setMember({ ...member, email: e.target.value })} placeholder={member.email} />
+                                    <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
+                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={(e) => setEvent({ ...event, location: e.target.value })} placeholder={event.location} />
+                                </div>
+                                <div>
+                                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
+                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={(e) => setEvent({ ...event, date: e.target.value })} placeholder={event.date} />
+                                </div>
+                                <div>
+                                    <label htmlFor="start-time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
+                                    <input type="text" name="start-time" id="start-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={(e) => setEvent({ ...event, start_time: e.target.value })} placeholder={event.start_time} />
+                                </div>
+                                <div>
+                                    <label htmlFor="end-time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
+                                    <input type="text" name="end-time" id="end-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={(e) => setEvent({ ...event, end_time: e.target.value })} placeholder={event.end_time} />
                                 </div>
 
                                 <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
 
-                                <a href="/members/" className="font-medium text-red-900 text-sm block hover:underline">Back to members</a>
+                                <a href="/events/" className="font-medium text-red-900 text-sm block hover:underline">Back to events</a>
                             </form>
                         </div>
                     </div>
