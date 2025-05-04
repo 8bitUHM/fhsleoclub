@@ -75,6 +75,7 @@ const UpdateEvent = () => {
         setLoading(false);
     };
 
+    // takes change in input and modifies event given the updated input values
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEvent({...event, [e.target.name]: e.target.value});
     };
