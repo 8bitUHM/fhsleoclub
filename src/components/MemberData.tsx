@@ -43,7 +43,7 @@ const MemberData: React.FC<MemberDataProps> = ({ member, setSelectedMember, sele
             <div>
               <button onClick={() => {
                 sessionStorage.setItem("memberData", JSON.stringify(member));
-                window.location.href = "/update/";
+                window.location.href = "/members/update/";
               }}
                 type="button" className="text-white bg-blue-600 inline-flex hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
