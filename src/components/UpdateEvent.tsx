@@ -37,13 +37,16 @@ const UpdateEvent = () => {
         try {
             const eventRef = getChildRef(eventRefs, emailKey);
 
-            // Updates the member's data as long as it doesn't run into any errors
-            await set(memberRef, {
-                name: member.name,
-                email: member.email,
-                role: member.role.toLowerCase(),
+            // Updates the event's data as long as it doesn't run into any errors
+            await set(eventRef, {
+                title: event.title,
+                description: event.description,
+                location: event.location,
+                date: event.date,
+                start_time: event.start_time,
+                end_time: event.end_time
             })
-            console.log("Members's data updated successfully");
+            console.log("Events' data updated successfully.");
 
             // This removes the previous member data only if the current email and previous email are not the same
             if (emailKey !== prevEmailKey) {
@@ -57,11 +60,11 @@ const UpdateEvent = () => {
             // Checks if required fields are empty 
             console.error("Error updating event data:", err);
             setShowMessage(true);
-            if (event.title.length === 0 || member.role.length === 0 || member.email.length === 0) {
+            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 
+                || event.date === 0
+            ) {
                 setMessage("Please fill in the blanks");
-            } else {
-                setMessage("Email must be valid");
-            }
+            } 
         }
         setLoading(false);
     };
