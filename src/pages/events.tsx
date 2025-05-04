@@ -91,8 +91,23 @@ export function Events() {
                                         )
                                     }
                                 </button>
-                            </form>
 
+                            </form>
+                            {/* Create Event Button*/}
+                            <form className="inline-flex font-medium text-sm text-white my-6 mx-4" role="group">
+                                <p className="sr-only">Creates an event if it's a signed in user</p>
+                                { 
+                                    user ? 
+                                    (
+                                        <>
+                                        <button type="button" className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">Update</button>
+                                        </>
+                                    ) :
+                                    (
+                                        <p>User is not logged in.</p>
+                                    )
+                                }
+                            </form>
 
                             <section className="gap-x-4 gap-y-4 justify-center" style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 20rem))"}}>
                                 {
