@@ -61,7 +61,7 @@ const AddMember = () => {
             console.error("Error adding member:", error);
             setShowMessage(true);
             if (member.name.length === 0 || member.role.length === 0 || member.email.length === 0) {
-                setMessage("Please fill in the blanks");
+                setMessage("Please fill out required information");
             } else {
                 setMessage("Email must be valid");
             }
