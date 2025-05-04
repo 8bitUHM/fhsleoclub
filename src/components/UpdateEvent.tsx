@@ -99,7 +99,7 @@ const UpdateEvent = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={(e) => setEvent({ ...event, date: e.target.value })} placeholder={event.date} />
+                                    <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={(e) => setEvent({ ...event, date: e.target.value })} />
                                 </div>
                                 <div>
                                     <label htmlFor="start-time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
