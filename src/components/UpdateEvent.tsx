@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
 import { set, remove } from "firebase/database";
-import useAuthRedirect from "../lib/useAuthRedirect";
-import { useMemberValidation } from "../lib/useMemberValidation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../lib/config";
 
 const UpdateEvent = () => {
     const [member, setMember] = useState({ name: "", email: "", role: "" });
     const [showDropdown, setShowDropdown] = useState(false);
     const [previousEmail, setPreviousEmail] = useState("");
-    const {
-        loading,
-        message,
-        showMessage,
-        setLoading,
-        setMessage,
-        setShowMessage,
-        checkIfMemberExists,
-    } = useMemberValidation();
+    // const [loading, setLoading] = useState(false);
+    // const [message, setMessage] = useState("Test error message");
+    // const [showMessage, setShowMessage] = useState(false);
+
+    // const {
+    //     loading,
+    //     message,
+    //     showMessage,
+    //     setLoading,
+    //     setMessage,
+    //     setShowMessage,
+    //     checkIfMemberExists,
+    // } = useMemberValidation();
 
     //Kicks the user back to home page if they are not logged in
-    useAuthRedirect();
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser?.email === undefined) {
+            window.location.href = "/";
+            }
+        });
+    
+        return () => unsubscribe();
+    }, []);
 
     //This grabs what the user clicked on to "update" from members page
     useEffect(() => {
