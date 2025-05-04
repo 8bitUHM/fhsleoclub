@@ -93,7 +93,7 @@ export function Events() {
                                 </button>
 
                             </form>
-                            {/* Create Event Button*/}
+                            {/* Update Event Button*/}
                             <form className="inline-flex font-medium text-sm text-white my-6 mx-4" role="group">
                                 <p className="sr-only">Creates an event if it's a signed in user</p>
                                 { 
