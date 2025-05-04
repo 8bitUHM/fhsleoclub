@@ -10,7 +10,10 @@ const UpdateEvent = () => {
     const [message, setMessage] = useState("Test error message");
     const [showMessage, setShowMessage] = useState(false);
 
-    //Kicks the user back to home page if they are not logged in
+    // key for events db reference
+    const [prevTitle, setPrevTitle] = useState(""); 
+
+    // Kicks the user back to home page if they are not logged in
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser?.email === undefined) {
@@ -21,21 +24,24 @@ const UpdateEvent = () => {
         return () => unsubscribe();
     }, []);
 
-    //This grabs what the user clicked on to "update" from members page
+    // grabs what the user clicked on to "update" from events page
     useEffect(() => {
-        const stored = sessionStorage.getItem("eventData");
+        const stored = sessionStorage.getItem("eventsData");
         if (stored) {
             const parsed = JSON.parse(stored);
+            setPrevTitle(parsed.title);
             setEvent(parsed);
         }
     }, []);
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const titleKey = event.title.replace(/\./g, "_");
+        const prevTitleKey = prevTitle.replace(/\./g, "_");
 
         setLoading(true);
         try {
-            const eventRef = getChildRef(eventRefs, emailKey);
+            const eventRef = getChildRef(eventRefs, titleKey);
 
             // Updates the event's data as long as it doesn't run into any errors
             await set(eventRef, {
@@ -49,16 +55,16 @@ const UpdateEvent = () => {
             console.log("Events' data updated successfully.");
 
             // This removes the previous member data only if the current email and previous email are not the same
-            if (emailKey !== prevEmailKey) {
-                const prevMemberRef = getChildRef(eventRefs, prevEmailKey);
-                remove(prevMemberRef);
+            if (titleKey !== prevTitleKey) {
+                const prevTitleRef = getChildRef(eventRefs, prevTitleKey);
+                remove(prevTitleRef);
             }
 
-            window.location.href = "/members/";
+            window.location.href = "/events/";
 
         } catch (err) {
             // Checks if required fields are empty 
-            console.error("Error updating event data:", err);
+            console.error("Error updating event data: ", err);
             setShowMessage(true);
             if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 
                 || event.date === 0
