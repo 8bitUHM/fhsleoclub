@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
 import { set, remove } from "firebase/database";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../lib/config";
+import useAuthRedirect from "../lib/useAuthRedirect";
 
 const UpdateEvent = () => {
     const [event, setEvent] = useState({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
@@ -15,15 +14,7 @@ const UpdateEvent = () => {
     const [prevTitle, setPrevTitle] = useState(""); 
 
     // Kicks the user back to home page if they are not logged in
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser?.email === undefined) {
-            window.location.href = "/";
-            }
-        });
-    
-        return () => unsubscribe();
-    }, []);
+    useAuthRedirect();
 
     // grabs what the user clicked on to "update" from events page
     useEffect(() => {
