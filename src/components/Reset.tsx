@@ -15,6 +15,7 @@ const Reset = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (aUser) => {
             setUser(aUser);
+            setIsReady(true);
         }, (error) => {
             window.alert(error);
             setIsReady(true);
