@@ -6,6 +6,7 @@ import AuthContext from "../contexts/AuthContext";
 const Navbar = () => {
 
     const user = useContext(AuthContext);
+    console.log(user?.email);
 
     const handleClick = async () => {
         try {
@@ -68,6 +69,9 @@ const Navbar = () => {
                                             <span className="block text-sm text-gray-500 break-words max-w-[200px]">{user.email}</span>
                                         </div>
                                         <ul className="py-2" aria-labelledby="user-menu-button">
+                                            <li>
+                                                <a href="/auth/reset-password/" className="block px-4 py-2 text-sm text-gray-700">Reset Password</a>
+                                            </li>
                                             <li>
                                                 <button type="submit" className="block px-4 py-2 text-sm text-gray-700" onClick={handleClick}>Sign out</button>
                                             </li>

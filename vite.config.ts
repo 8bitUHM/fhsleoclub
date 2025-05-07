@@ -17,6 +17,7 @@ export default defineConfig({
         forgot: resolve(__dirname, "auth/forgot-password/index.html"),
         update: resolve(__dirname, "update/index.html"),
         add: resolve(__dirname, "add/index.html"),
+        reset: resolve(__dirname, "auth/reset-password/index.html"),
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
       },
     },
