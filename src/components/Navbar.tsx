@@ -6,7 +6,6 @@ import AuthContext from "../contexts/AuthContext";
 const Navbar = () => {
 
     const user = useContext(AuthContext);
-    console.log(user?.email);
 
     const handleClick = async () => {
         try {
