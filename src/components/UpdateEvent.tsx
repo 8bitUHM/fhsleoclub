@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
 import { set, remove } from "firebase/database";
+import { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
 
 const UpdateEvent = () => {
-    const [event, setEvent] = useState({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
+    const [event, setEvent] = useState<ClubEvent>({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("Test error message");
     const [showMessage, setShowMessage] = useState(false);
