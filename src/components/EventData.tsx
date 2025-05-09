@@ -27,7 +27,7 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
 
     return (
     <>
-    <article className="grid grid-rows-subgrid gap-y-0 row-span-4 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${event.title}`}>
+    <article className="flex flex-col gap-2 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${event.title}`}>
         <span className="pb-2 font-normal text-sm text-pink-900">{new Date(event.date).toLocaleDateString()}</span>
         <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
             {event.title}
@@ -41,30 +41,30 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
         <p className="text-pretty leading-6 pt-4">{event.description}</p>
         {user && (
             <>
-            <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <div>
-                <button onClick={() => {
-                sessionStorage.setItem("eventData", JSON.stringify(event));
-                window.location.href = "/events/update/";
-                }}
-                type="button" className="text-white bg-blue-600 inline-flex hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                    <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                </svg>
+            <div className="flex flex-wrap justify-center gap-2 mt-4 w-full">
+                <div>
+                    <button onClick={() => {
+                    sessionStorage.setItem("eventData", JSON.stringify(event));
+                    window.location.href = "/events/update/";
+                    }}
+                    type="button" className="text-white bg-blue-600 flex hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                        <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                        <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                    </svg>
 
-                </button>
-            </div>
+                    </button>
+                </div>
 
-            <div>
-                <button
-                onClick={() => setSelectedEvent(event)}
-                data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-700 inline-flex focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-                    <path d="M10.375 2.25a4.125 4.125 0 1 0 0 8.25 4.125 4.125 0 0 0 0-8.25ZM10.375 12a7.125 7.125 0 0 0-7.124 7.247.75.75 0 0 0 .363.63 13.067 13.067 0 0 0 6.761 1.873c2.472 0 4.786-.684 6.76-1.873a.75.75 0 0 0 .364-.63l.001-.12v-.002A7.125 7.125 0 0 0 10.375 12ZM16 9.75a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5h-6Z" />
-                </svg>
-                </button>
-            </div>
+                <div>
+                    <button
+                    onClick={() => setSelectedEvent(event)}
+                    data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-700 inline-flex focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                        <path d="M10.375 2.25a4.125 4.125 0 1 0 0 8.25 4.125 4.125 0 0 0 0-8.25ZM10.375 12a7.125 7.125 0 0 0-7.124 7.247.75.75 0 0 0 .363.63 13.067 13.067 0 0 0 6.761 1.873c2.472 0 4.786-.684 6.76-1.873a.75.75 0 0 0 .364-.63l.001-.12v-.002A7.125 7.125 0 0 0 10.375 12ZM16 9.75a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5h-6Z" />
+                    </svg>
+                    </button>
+                </div>
             </div>
 
             <div id="popup-modal" tabIndex={-1} className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
