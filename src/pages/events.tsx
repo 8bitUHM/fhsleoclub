@@ -12,6 +12,7 @@ import { auth } from "../lib/config";
 import { onAuthStateChanged, User } from "firebase/auth";
 import AuthContext from "../contexts/AuthContext";
 import "../index.css";
+import EventData from "../components/EventData";
 
 export function Events() {
     const [ events, setEvents ] = useState<ClubEvent[]>([]);
@@ -19,6 +20,8 @@ export function Events() {
     const [ isReady, setIsReady ] = useState(false); 
     const [ user, setUser ] = useState<User | null>(null);
     const [ isLoading, setIsLoading ] = useState(true);
+    const [selectedEvent, setSelectedEvent] = useState<ClubEvent | null>(null);
+
     
     useEffect(() => {
         initFlowbite();
@@ -97,20 +100,10 @@ export function Events() {
                             <section className="gap-x-4 gap-y-4 justify-center" style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 20rem))"}}>
                                 {
                                     !isLoading ? 
-                                    (events.map((val, index) => (
-                                        <article className="grid grid-rows-subgrid gap-y-0 row-span-4 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${index}`}>
-                                            <span className="pb-2 font-normal text-sm text-pink-900">{new Date(val.date).toLocaleDateString()}</span>
-                                            <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
-                                                {val.title}
-                                            </h3>
-                                            <div className="text-balance text-normal text-sm font-thin leading-5 pt-1 text-gray-600">
-                                                <p>{val.location}</p>
-                                                {
-                                                    (val.start_time && val.end_time) ? <p>{`${val.start_time}-${val.end_time}`}</p> : <p>{`${val.start_time}${val.end_time}`}</p>
-                                                }
-                                            </div>
-                                            <p className="text-pretty leading-6 pt-4">{val.description}</p>
-                                        </article>
+                                    (events.map((event) => (
+                                        <EventData event={event} 
+                                        selectedEvent={selectedEvent} 
+                                        setSelectedEvent={setSelectedEvent} /> 
                                     ))) : <Loading />
                                 }
                             </section>
