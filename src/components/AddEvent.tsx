@@ -3,6 +3,7 @@ import { set } from "firebase/database";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
 import type { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
+import { useEventValidation } from "../lib/useEventValidation";
 
 const AddEvent = () => {
     const [event, setEvent] = useState<ClubEvent>({
@@ -13,9 +14,15 @@ const AddEvent = () => {
         end_time: "",
         date: 0
     });
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("Test error message");
-    const [showMessage, setShowMessage] = useState(false);
+    const {
+        loading,
+        message,
+        showMessage,
+        setLoading,
+        setMessage,
+        setShowMessage,
+        checkIfEventExists
+    } = useEventValidation();
     
     // handles value changes in adding/altering events
     const handleChange = (e: { target: { name: string; value: string }}) => {
@@ -35,15 +42,20 @@ const AddEvent = () => {
         e.preventDefault();
         setLoading(true);
 
+        
         try {
             const eventRef = getChildRef(eventRefs, titleKey);
 
-            await set(eventRef, titleKey);
+            // checks if event title exists in the database
+            const exists = await checkIfEventExists(event.title);
+            if (exists) return;
+
+            await set(eventRef, event);
             setEvent({ title: "", description: "", location: "", start_time: "", end_time: "", date: 0});
             window.location.href = "/events/";
         } catch (err) {
             // checks if required fields are empty 
-            console.error("Error adding event: ", err);
+            console.error(`Error adding event: ${err}`);
             setShowMessage(true);
             if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0
                 || event.date === 0

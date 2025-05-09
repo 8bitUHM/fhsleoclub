@@ -96,7 +96,7 @@ export function Events() {
                                     }
                                 </button>
                             </form>
-
+                                <AddEventButton />
 
                             <section className="gap-x-4 gap-y-4 justify-center" style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 20rem))"}}>
                                 {
@@ -107,7 +107,6 @@ export function Events() {
                                         setSelectedEvent={setSelectedEvent} /> 
                                     ))) : <Loading />
                                 }
-                                <AddEventButton />
                             </section>
                         </main>
                         <Footer />
