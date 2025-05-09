@@ -2,23 +2,23 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
+import UpdateEvent from "../components/UpdateEvent";
 import "../index.css";
-import AddEvent from "../components/AddEvent";
 
-export function EventAdd() {
+export function SignIn() {
     useEffect(() => {
         initFlowbite();
     }, []);
 
     return (
         <>
-            <AddEvent />
+            <UpdateEvent />
         </>
     );
 }
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <EventAdd />
+        <UpdateEvent />
     </StrictMode>
 );

@@ -13,6 +13,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import AuthContext from "../contexts/AuthContext";
 import "../index.css";
 import EventData from "../components/EventData";
+import AddEventButton from "../components/AddEventButton";
 
 export function Events() {
     const [ events, setEvents ] = useState<ClubEvent[]>([]);
@@ -106,6 +107,7 @@ export function Events() {
                                         setSelectedEvent={setSelectedEvent} /> 
                                     ))) : <Loading />
                                 }
+                                <AddEventButton />
                             </section>
                         </main>
                         <Footer />
