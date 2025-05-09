@@ -4,12 +4,20 @@ import { eventRefs, getChildRef } from "../lib/dbRefs";
 import { set, remove } from "firebase/database";
 import { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
+import { useEventValidation } from "../lib/useEventValidation";
 
 const UpdateEvent = () => {
     const [event, setEvent] = useState<ClubEvent>({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("Test error message");
-    const [showMessage, setShowMessage] = useState(false);
+
+    const {
+        loading,
+        message,
+        showMessage,
+        setLoading,
+        setMessage,
+        setShowMessage,
+        checkIfEventExists,
+    } = useEventValidation();
 
     // key for events db reference
     const [prevTitle, setPrevTitle] = useState(""); 
@@ -35,6 +43,11 @@ const UpdateEvent = () => {
         setLoading(true);
         try {
             const eventRef = getChildRef(eventRefs, titleKey);
+            
+            if (titleKey !== prevTitleKey) {
+                const exists = await checkIfEventExists(event.title);
+                if (exists) return;
+            }
 
             // Updates the event's data as long as it doesn't run into any errors
             await set(eventRef, {
