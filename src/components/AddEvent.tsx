@@ -4,7 +4,7 @@ import { eventRefs, getChildRef } from "../lib/dbRefs";
 import type { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
 
-const addEvent = () => {
+const AddEvent = () => {
     const [event, setEvent] = useState<ClubEvent>({
         title: "",
         description: "",
@@ -124,4 +124,4 @@ const addEvent = () => {
     );
 };
 
-export default addEvent;
+export default AddEvent;
