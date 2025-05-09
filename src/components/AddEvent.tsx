@@ -55,7 +55,7 @@ const AddEvent = () => {
             window.location.href = "/events/";
         } catch (err) {
             // checks if required fields are empty 
-            console.error(`Error adding event: ${err}`);
+            console.error("Error adding event: ", err);
             setShowMessage(true);
             if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0
                 || event.date === 0
@@ -78,30 +78,30 @@ const AddEvent = () => {
                             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                                 <div>
                                     <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
-                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleChange} placeholder={event.title} />
+                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
-                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleChange} placeholder={event.description} />
+                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
-                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleChange} placeholder={event.location} />
+                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
                                     <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange} />
                                 </div>
                                 <div>
-                                    <label htmlFor="start-time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                                    <input type="text" name="start-time" id="start-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleChange} placeholder={event.start_time} />
+                                    <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
+                                    <input type="text" name="start_time" id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleChange}  />
                                 </div>
                                 <div>
-                                    <label htmlFor="end-time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                                    <input type="text" name="end-time" id="end-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleChange} placeholder={event.end_time} />
+                                    <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
+                                    <input type="text" name="end_time" id="end_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleChange}  />
                                 </div>
 
-                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
+                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Adding..." : "Add"}</button>
 
                                 <a href="/events/" className="font-medium text-red-900 text-sm block hover:underline">Back to events</a>
                             </form>
