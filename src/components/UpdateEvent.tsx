@@ -47,7 +47,7 @@ const UpdateEvent = () => {
             })
             console.log("Events' data updated successfully.");
 
-            // This removes the previous member data only if the current email and previous email are not the same
+            // This removes the previous email data only if the current title and previous title are not the same
             if (titleKey !== prevTitleKey) {
                 const prevTitleRef = getChildRef(eventRefs, prevTitleKey);
                 remove(prevTitleRef);
