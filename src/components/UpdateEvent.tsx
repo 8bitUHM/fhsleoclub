@@ -49,6 +49,9 @@ const UpdateEvent = () => {
                 if (exists) return;
             }
 
+            // ensures event data value is a number
+            event.date = new Date(event.date).getTime();
+
             // Updates the event's data as long as it doesn't run into any errors
             await set(eventRef, {
                 title: event.title,
@@ -57,7 +60,7 @@ const UpdateEvent = () => {
                 date: event.date,
                 start_time: event.start_time,
                 end_time: event.end_time
-            })
+            });
             console.log("Events' data updated successfully.");
 
             // This removes the previous email data only if the current title and previous title are not the same
@@ -110,15 +113,15 @@ const UpdateEvent = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleInputChange} />
+                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleInputChange} />
                                 </div>
                                 <div>
-                                    <label htmlFor="start-time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                                    <input type="text" name="start-time" id="start-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleInputChange} placeholder={event.start_time} />
+                                    <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
+                                    <input type="text" name="start_time" id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleInputChange} placeholder={event.start_time} />
                                 </div>
                                 <div>
-                                    <label htmlFor="end-time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                                    <input type="text" name="end-time" id="end-time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleInputChange} placeholder={event.end_time} />
+                                    <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
+                                    <input type="text" name="end_time" id="end_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleInputChange} placeholder={event.end_time} />
                                 </div>
 
                                 <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>

@@ -51,7 +51,7 @@ const AddEvent = () => {
 
             // parse date string to number
             event.date = new Date(event.date).getTime();
-            console.log("Date type: ", typeof event.date);
+            // console.log("Date type: ", typeof event.date);
 
             await set(eventRef, event);
             setEvent({ title: "", description: "", location: "", date: 0, start_time: "", end_time: "" });
