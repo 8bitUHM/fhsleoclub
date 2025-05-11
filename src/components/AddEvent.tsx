@@ -50,12 +50,18 @@ const AddEvent = () => {
             const exists = await checkIfEventExists(event.title);
             if (exists) return;
 
+            // parse date string to number
+            event.date = new Date(event.date).getTime();
+            console.log("Date type: ", typeof event.date);
+
             await set(eventRef, event);
             setEvent({ title: "", description: "", location: "", date: 0, start_time: "", end_time: "" });
+            console.log("Event added: ", event.title);
             window.location.href = "/events/";
         } catch (err) {
             // checks if required fields are empty 
             console.error("Error adding event: ", err);
+            console.log(event);
             setShowMessage(true);
             if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0) {
                 setMessage("Please fill out required information");
@@ -90,7 +96,7 @@ const AddEvent = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange} />
+                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange}/>
                                 </div>
                                 <div>
                                     <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
