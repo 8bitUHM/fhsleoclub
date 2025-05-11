@@ -102,9 +102,13 @@ export function Events() {
                                 {
                                     !isLoading ? 
                                     (events.map((event) => (
+                                    
+                                    <article className="flex flex-col gap-2 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${event.title}`}>
                                         <EventData event={event} 
                                         selectedEvent={selectedEvent} 
                                         setSelectedEvent={setSelectedEvent} /> 
+                                    </article>
+                                    
                                     ))) : <Loading />
                                 }
                             </section>

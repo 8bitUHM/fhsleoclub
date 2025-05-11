@@ -27,7 +27,6 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
 
     return (
     <>
-    <article className="flex flex-col gap-2 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${event.title}`}>
         <span className="pb-2 font-normal text-sm text-pink-900">{new Date(event.date).toLocaleDateString()}</span>
         <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
             {event.title}
@@ -95,7 +94,6 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
             </>
 
         )}
-    </article>
     </>
     );
 };

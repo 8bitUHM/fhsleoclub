@@ -25,10 +25,11 @@ const AddEvent = () => {
     } = useEventValidation();
     
     // handles value changes in adding/altering events
+    // also ensures that the date input is a number
     const handleChange = (e: { target: { name: string; value: string }}) => {
         setEvent((prev) => ({
             ...prev,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         }));
     };
 
@@ -42,25 +43,24 @@ const AddEvent = () => {
         e.preventDefault();
         setLoading(true);
 
-        
         try {
             const eventRef = getChildRef(eventRefs, titleKey);
-
+            
             // checks if event title exists in the database
             const exists = await checkIfEventExists(event.title);
             if (exists) return;
 
             await set(eventRef, event);
-            setEvent({ title: "", description: "", location: "", start_time: "", end_time: "", date: 0});
+            setEvent({ title: "", description: "", location: "", date: 0, start_time: "", end_time: "" });
             window.location.href = "/events/";
         } catch (err) {
             // checks if required fields are empty 
             console.error("Error adding event: ", err);
             setShowMessage(true);
-            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0
-                || event.date === 0
-            ) {
+            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0) {
                 setMessage("Please fill out required information");
+            } else {
+                setMessage(`${err}`);
             }
         }
         setLoading(false);
@@ -90,7 +90,7 @@ const AddEvent = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="number" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange} />
+                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange} />
                                 </div>
                                 <div>
                                     <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
