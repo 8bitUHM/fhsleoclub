@@ -25,7 +25,6 @@ const AddEvent = () => {
     } = useEventValidation();
     
     // handles value changes in adding/altering events
-    // also ensures that the date input is a number
     const handleChange = (e: { target: { name: string; value: string }}) => {
         setEvent((prev) => ({
             ...prev,

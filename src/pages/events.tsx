@@ -103,7 +103,7 @@ export function Events() {
                                     !isLoading ? 
                                     (events.map((event) => (
                                     
-                                    <article className="flex flex-col gap-2 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${event.title}`}>
+                                    <article className="flex flex-col gap-2 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${crypto.randomUUID()}`}>
                                         <EventData event={event} 
                                         selectedEvent={selectedEvent} 
                                         setSelectedEvent={setSelectedEvent} /> 
