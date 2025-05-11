@@ -27,7 +27,7 @@ const UpdateEvent = () => {
 
     // grabs what the user clicked on to "update" from events page
     useEffect(() => {
-        const stored = sessionStorage.getItem("eventsData");
+        const stored = sessionStorage.getItem("eventData");
         if (stored) {
             const parsed = JSON.parse(stored);
             setPrevTitle(parsed.title);
@@ -75,10 +75,10 @@ const UpdateEvent = () => {
             // Checks if required fields are empty 
             console.error("Error updating event data: ", err);
             setShowMessage(true);
-            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 
-                || event.date === 0
-            ) {
+            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 ) {
                 setMessage("Please fill in the blanks");
+            } else {
+                setMessage(`${err}`);
             } 
         }
         setLoading(false);
