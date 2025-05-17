@@ -1,14 +1,19 @@
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { set } from "firebase/database";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
-import { set, remove } from "firebase/database";
-import { ClubEvent } from "../lib/types";
+import type { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
 import { useEventValidation } from "../lib/useEventValidation";
 
-const UpdateEvent = () => {
-    const [event, setEvent] = useState<ClubEvent>({ description: "", end_time: "", start_time: "", title: "", location: "", date: 0});
-
+const AddEvent = () => {
+    const [event, setEvent] = useState<ClubEvent>({
+        title: "",
+        description: "",
+        location: "",
+        start_time: "",
+        end_time: "",
+        date: 0
+    });
     const {
         loading,
         message,
@@ -16,77 +21,54 @@ const UpdateEvent = () => {
         setLoading,
         setMessage,
         setShowMessage,
-        checkIfEventExists,
+        checkIfEventExists
     } = useEventValidation();
+    
+    // handles value changes in adding/altering events
+    const handleChange = (e: { target: { name: string; value: string }}) => {
+        setEvent((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
-    // key for events db reference
-    const [prevTitle, setPrevTitle] = useState(""); 
-
-    // Kicks the user back to home page if they are not logged in
+    // kicks user back to home page if they aren't logged in 
     useAuthRedirect();
 
-    // grabs what the user clicked on to "update" from events page
-    useEffect(() => {
-        const stored = sessionStorage.getItem("eventData");
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            setPrevTitle(parsed.title);
-            setEvent(parsed);
-        }
-    }, []);
-
-    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // updates event
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         const titleKey = event.title.replace(/\./g, "_");
-        const prevTitleKey = prevTitle.replace(/\./g, "_");
 
+        e.preventDefault();
         setLoading(true);
+
         try {
             const eventRef = getChildRef(eventRefs, titleKey);
             
-            if (titleKey !== prevTitleKey) {
-                const exists = await checkIfEventExists(event.title);
-                if (exists) return;
-            }
+            // checks if event title exists in the database
+            const exists = await checkIfEventExists(event.title);
+            if (exists) return;
 
-            // ensures event data value is a number
+            // parse date string to number
             event.date = new Date(event.date).getTime();
+            // console.log("Date type: ", typeof event.date);
 
-            // Updates the event's data as long as it doesn't run into any errors
-            await set(eventRef, {
-                title: event.title,
-                description: event.description,
-                location: event.location,
-                date: event.date,
-                start_time: event.start_time,
-                end_time: event.end_time
-            });
-            console.log("Events' data updated successfully.");
-
-            // This removes the previous email data only if the current title and previous title are not the same
-            if (titleKey !== prevTitleKey) {
-                const prevTitleRef = getChildRef(eventRefs, prevTitleKey);
-                remove(prevTitleRef);
-            }
-
+            await set(eventRef, event);
+            setEvent({ title: "", description: "", location: "", date: 0, start_time: "", end_time: "" });
+            console.log("Event added: ", event.title);
             window.location.href = "/events/";
-
         } catch (err) {
-            // Checks if required fields are empty 
-            console.error("Error updating event data: ", err);
+            // checks if required fields are empty 
+            console.error("Error adding event: ", err);
+            console.log(event);
             setShowMessage(true);
-            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 ) {
-                setMessage("Please fill in the blanks");
+            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0) {
+                setMessage("Please fill out required information");
             } else {
                 setMessage(`${err}`);
-            } 
+            }
         }
         setLoading(false);
-    };
-
-    // takes change in input and modifies event given the updated input values
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEvent({...event, [e.target.name]: e.target.value});
     };
 
     return (
@@ -94,37 +76,37 @@ const UpdateEvent = () => {
             <div className="bg-red-900 min-h-screen flex items-center justify-center">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto w-[40rem] md:h-screen lg:py-0">
                     <div className="flex items-center mb-6 text-2xl font-semibold text-white">
-                        Update the event
+                        Add an event
                     </div>
                     <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-8 space-y-4 md:space-y-6 sm:p-8">
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleUpdate}>
+                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                                 <div>
                                     <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
-                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleInputChange} placeholder={event.title} />
+                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
-                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleInputChange} placeholder={event.description} />
+                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
-                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleInputChange} placeholder={event.location} />
+                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleInputChange} />
+                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleChange}/>
                                 </div>
                                 <div>
                                     <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                                    <input type="text" name="start_time" id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleInputChange} placeholder={event.start_time} />
+                                    <input type="text" name="start_time" id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleChange}  />
                                 </div>
                                 <div>
                                     <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                                    <input type="text" name="end_time" id="end_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleInputChange} placeholder={event.end_time} />
+                                    <input type="text" name="end_time" id="end_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleChange}  />
                                 </div>
 
-                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
+                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Adding..." : "Add"}</button>
 
                                 <a href="/events/" className="font-medium text-red-900 text-sm block hover:underline">Back to events</a>
                             </form>
@@ -159,4 +141,4 @@ const UpdateEvent = () => {
     );
 };
 
-export default UpdateEvent;
+export default AddEvent;
