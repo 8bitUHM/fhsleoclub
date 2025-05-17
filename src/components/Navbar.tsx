@@ -69,6 +69,9 @@ const Navbar = () => {
                                         </div>
                                         <ul className="py-2" aria-labelledby="user-menu-button">
                                             <li>
+                                                <a href="/auth/reset-password/" className="block px-4 py-2 text-sm text-gray-700">Reset Password</a>
+                                            </li>
+                                            <li>
                                                 <button type="submit" className="block px-4 py-2 text-sm text-gray-700" onClick={handleClick}>Sign out</button>
                                             </li>
                                         </ul>
