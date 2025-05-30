@@ -135,7 +135,7 @@ const UpdateEvent = () => {
                     <div className="w-full">
                     <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
                     <input
-                        type="text"
+                        type="date"
                         name="date"
                         id="date"
                         className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -146,7 +146,7 @@ const UpdateEvent = () => {
                     <div className="w-full">
                     <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
                     <input
-                        type="text"
+                        type="time"
                         name="start_time"
                         id="start_time"
                         className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -158,7 +158,7 @@ const UpdateEvent = () => {
                     <div className="sm:col-span-2">
                     <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
                     <input
-                        type="text"
+                        type="time"
                         name="end_time"
                         id="end_time"
                         className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
