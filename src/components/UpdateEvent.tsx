@@ -91,47 +91,102 @@ const UpdateEvent = () => {
 
     return (
         <>
-            <div className="bg-red-900 min-h-screen flex items-center justify-center">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto w-[40rem] md:h-screen lg:py-0">
-                    <div className="flex items-center mb-6 text-2xl font-semibold text-white">
-                        Update the event
+        <section className="bg-red-900 min-h-screen flex items-center justify-center">
+            <div className="bg-white py-8 px-4 mx-auto max-w-2xl w-full rounded-lg">
+                <h2 className="mb-4 text-xl font-bold text-red-900">Update the event</h2>
+                <form onSubmit={handleUpdate}>
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    <div className="sm:col-span-2">
+                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.title}
+                        onChange={handleInputChange}
+                        placeholder={event.title}
+                    />
                     </div>
-                    <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-                        <div className="p-8 space-y-4 md:space-y-6 sm:p-8">
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleUpdate}>
-                                <div>
-                                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
-                                    <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.title} onChange={handleInputChange} placeholder={event.title} />
-                                </div>
-                                <div>
-                                    <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
-                                    <input type="text" name="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.description} onChange={handleInputChange} placeholder={event.description} />
-                                </div>
-                                <div>
-                                    <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
-                                    <input type="text" name="location" id="location" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.location} onChange={handleInputChange} placeholder={event.location} />
-                                </div>
-                                <div>
-                                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                                    <input type="text" name="date" id="date" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.date} onChange={handleInputChange} />
-                                </div>
-                                <div>
-                                    <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                                    <input type="text" name="start_time" id="start_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.start_time} onChange={handleInputChange} placeholder={event.start_time} />
-                                </div>
-                                <div>
-                                    <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                                    <input type="text" name="end_time" id="end_time" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value={event.end_time} onChange={handleInputChange} placeholder={event.end_time} />
-                                </div>
-
-                                <button type="submit" disabled={loading} className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">{loading ? "Updating..." : "Update"}</button>
-
-                                <a href="/events/" className="font-medium text-red-900 text-sm block hover:underline">Back to events</a>
-                            </form>
-                        </div>
+                    <div className="sm:col-span-2">
+                    <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
+                    <input
+                        type="text"
+                        name="description"
+                        id="description"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.description}
+                        onChange={handleInputChange}
+                        placeholder={event.description}
+                    />
+                    </div>
+                    <div className="sm:col-span-2">
+                    <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
+                    <input
+                        type="text"
+                        name="location"
+                        id="location"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.location}
+                        onChange={handleInputChange}
+                        placeholder={event.location}
+                    />
+                    </div>
+                    <div className="w-full">
+                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
+                    <input
+                        type="text"
+                        name="date"
+                        id="date"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.date}
+                        onChange={handleInputChange}
+                    />
+                    </div>
+                    <div className="w-full">
+                    <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
+                    <input
+                        type="text"
+                        name="start_time"
+                        id="start_time"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.start_time}
+                        onChange={handleInputChange}
+                        placeholder={event.start_time}
+                    />
+                    </div>
+                    <div className="sm:col-span-2">
+                    <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
+                    <input
+                        type="text"
+                        name="end_time"
+                        id="end_time"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        value={event.end_time}
+                        onChange={handleInputChange}
+                        placeholder={event.end_time}
+                    />
                     </div>
                 </div>
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 sm:mt-6 text-center disabled:cursor-progress disabled:bg-red-500"
+                >
+                    {loading ? "Updating..." : "Update"}
+                </button>
+
+                <a
+                    href="/events/"
+                    className="font-medium text-red-900 text-sm block mt-2 hover:underline"
+                >
+                    Back to events
+                </a>
+                </form>
             </div>
+        </section>
+
 
             {showMessage && (
                 <div tabIndex={-1} className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
