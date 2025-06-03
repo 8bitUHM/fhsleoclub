@@ -1,43 +1,18 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { initFlowbite } from "flowbite";
-import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import AuthContext from "../contexts/AuthContext";
+import { AuthContextProvider } from "../contexts/AuthContext";
 import "../index.css";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../lib/config";
 
 export function Index() {
 
-  const [ user, setUser ] = useState<User | null>(null);
-  const [ isReady, setIsReady ] = useState(false);
-
-  useEffect(() => {
-    initFlowbite();
-  });
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (aUser) => {
-      setUser(aUser);
-      setIsReady(true);
-    }, (error) => {
-        window.alert(error);
-        setIsReady(true);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   return (
     <>
-      { isReady && (
-        <>
-        <AuthContext.Provider value={user}>
+        <AuthContextProvider>
           <Navbar />
-        </AuthContext.Provider>
+        </AuthContextProvider>
         <Header />
         <main className="min-h-screen">
           {/* What is Leo Club */}
@@ -113,8 +88,6 @@ export function Index() {
         </main>
         
         <Footer />
-        </>
-        )}
       </>
   );
 }

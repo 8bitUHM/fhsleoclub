@@ -1,11 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/config";
 import AuthContext from "../contexts/AuthContext";
+import { initFlowbite } from "flowbite";
 
 const Navbar = () => {
 
-    const user = useContext(AuthContext);
+    useEffect(() => {
+        initFlowbite();
+    }, [])
+
+    const { user } = useContext(AuthContext);
 
     const handleClick = async () => {
         try {
