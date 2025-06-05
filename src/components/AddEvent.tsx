@@ -26,6 +26,7 @@ const AddEvent = () => {
     
     // handles value changes in adding/altering events
     const handleChange = (e: { target: { name: string; value: string }}) => {
+        console.log(event.date);
         setEvent((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
@@ -37,15 +38,16 @@ const AddEvent = () => {
 
     // updates event
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const titleKey = event.title.replace(/\./g, "_");
+        const eventYear = event.date;
+        const eventKey = event.title + eventYear;
 
         e.preventDefault();
         setLoading(true);
 
         try {
-            const eventRef = getChildRef(eventRefs, titleKey);
+            const eventRef = getChildRef(eventRefs, eventKey);
             
-            // checks if event title exists in the database
+            // checks if event key exists in the database
             const exists = await checkIfEventExists(event.title);
             if (exists) return;
 
@@ -57,6 +59,8 @@ const AddEvent = () => {
             setEvent({ title: "", description: "", location: "", date: 0, start_time: "", end_time: "" });
             console.log("Event added: ", event.title);
             window.location.href = "/events/";
+
+            console.log("Added event's key: ", eventKey);
         } catch (err) {
             // checks if required fields are empty 
             console.error("Error adding event: ", err);
@@ -88,7 +92,6 @@ const AddEvent = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value={event.title}
                             onChange={handleChange}
-                            placeholder={event.title}
                         />
                         </div>
                         <div className="sm:col-span-2">
@@ -100,7 +103,6 @@ const AddEvent = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value={event.description}
                             onChange={handleChange}
-                            placeholder={event.description}
                         />
                         </div>
                         <div className="sm:col-span-2">
@@ -112,7 +114,6 @@ const AddEvent = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value={event.location}
                             onChange={handleChange}
-                            placeholder={event.location}
                         />
                         </div>
                         <div className="w-full">
@@ -135,7 +136,6 @@ const AddEvent = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value={event.start_time}
                             onChange={handleChange}
-                            placeholder={event.start_time}
                         />
                         </div>
                         <div className="sm:col-span-2">
@@ -147,7 +147,6 @@ const AddEvent = () => {
                             className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value={event.end_time}
                             onChange={handleChange}
-                            placeholder={event.end_time}
                         />
                         </div>
                     </div>

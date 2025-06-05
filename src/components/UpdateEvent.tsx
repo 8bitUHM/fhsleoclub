@@ -43,6 +43,8 @@ const UpdateEvent = () => {
         setLoading(true);
         try {
             const eventRef = getChildRef(eventRefs, titleKey);
+
+
             
             if (titleKey !== prevTitleKey) {
                 const exists = await checkIfEventExists(event.title);
@@ -75,7 +77,9 @@ const UpdateEvent = () => {
             // Checks if required fields are empty 
             console.error("Error updating event data: ", err);
             setShowMessage(true);
-            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 ) {
+            if (event.title.length === 0 || event.description.length === 0 || event.location.length === 0 
+                || event.date === 0
+            ) {
                 setMessage("Please fill in the blanks");
             } else {
                 setMessage(`${err}`);
@@ -97,75 +101,76 @@ const UpdateEvent = () => {
                 <form onSubmit={handleUpdate}>
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div className="sm:col-span-2">
-                    <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.title}
-                        onChange={handleInputChange}
-                        placeholder={event.title}
-                    />
+                        <label htmlFor="title" className="block mb-2 text-sm font-medium text-red-900">Title</label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.title}
+                            onChange={handleInputChange}
+                            placeholder={event.title}
+                        />
                     </div>
                     <div className="sm:col-span-2">
-                    <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
-                    <input
-                        type="text"
-                        name="description"
-                        id="description"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.description}
-                        onChange={handleInputChange}
-                        placeholder={event.description}
-                    />
+                        <label htmlFor="description" className="block mb-2 text-sm font-medium text-red-900">Description</label>
+                        <input
+                            type="text"
+                            name="description"
+                            id="description"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.description}
+                            onChange={handleInputChange}
+                            placeholder={event.description}
+                        />
                     </div>
                     <div className="sm:col-span-2">
-                    <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
-                    <input
-                        type="text"
-                        name="location"
-                        id="location"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.location}
-                        onChange={handleInputChange}
-                        placeholder={event.location}
-                    />
+                        <label htmlFor="location" className="block mb-2 text-sm font-medium text-red-900">Location</label>
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.location}
+                            onChange={handleInputChange}
+                            placeholder={event.location}
+                        />
                     </div>
                     <div className="w-full">
-                    <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
-                    <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.date}
-                        onChange={handleInputChange}
-                    />
+                        <label htmlFor="date" className="block mb-2 text-sm font-medium text-red-900">Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            id="date"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.date}
+                            onChange={handleInputChange}
+                            placeholder={(event.date).toString()}
+                        />
                     </div>
                     <div className="w-full">
-                    <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
-                    <input
-                        type="time"
-                        name="start_time"
-                        id="start_time"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.start_time}
-                        onChange={handleInputChange}
-                        placeholder={event.start_time}
-                    />
+                        <label htmlFor="start_time" className="block mb-2 text-sm font-medium text-red-900">Start Time</label>
+                        <input
+                            type="time"
+                            name="start_time"
+                            id="start_time"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.start_time}
+                            onChange={handleInputChange}
+                            placeholder={event.start_time}
+                        />
                     </div>
                     <div className="sm:col-span-2">
-                    <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
-                    <input
-                        type="time"
-                        name="end_time"
-                        id="end_time"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value={event.end_time}
-                        onChange={handleInputChange}
-                        placeholder={event.end_time}
-                    />
+                        <label htmlFor="end_time" className="block mb-2 text-sm font-medium text-red-900">End Time</label>
+                        <input
+                            type="time"
+                            name="end_time"
+                            id="end_time"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value={event.end_time}
+                            onChange={handleInputChange}
+                            placeholder={event.end_time}
+                        />
                     </div>
                 </div>
 
