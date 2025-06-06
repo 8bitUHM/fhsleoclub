@@ -26,7 +26,6 @@ const AddEvent = () => {
     
     // handles value changes in adding/altering events
     const handleChange = (e: { target: { name: string; value: string }}) => {
-        console.log(event.date);
         setEvent((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
@@ -38,8 +37,8 @@ const AddEvent = () => {
 
     // updates event
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const eventYear = event.date;
-        const eventKey = event.title + eventYear;
+        const eventYear = new Date(event.date);
+        const eventKey = event.title + eventYear.getFullYear();
 
         e.preventDefault();
         setLoading(true);
@@ -51,6 +50,7 @@ const AddEvent = () => {
             const exists = await checkIfEventExists(event.title);
             if (exists) return;
 
+
             // parse date string to number
             event.date = new Date(event.date).getTime();
             // console.log("Date type: ", typeof event.date);
@@ -60,7 +60,6 @@ const AddEvent = () => {
             console.log("Event added: ", event.title);
             window.location.href = "/events/";
 
-            console.log("Added event's key: ", eventKey);
         } catch (err) {
             // checks if required fields are empty 
             console.error("Error adding event: ", err);
