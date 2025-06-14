@@ -52,14 +52,18 @@ const Navbar = () => {
                                 <a href="/members/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Members</a>
                             </li>
                             {user && (
-                                <li>
-                                    <a
-                                        href="/users/adduser/"
-                                        className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0"
-                                    >
-                                        Add User
-                                    </a>
-                                </li>
+                                <>
+                                    <li>
+                                        <a href="/users/adduser/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">
+                                            Add User
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/users/deleteuser/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">
+                                            Delete User
+                                        </a>
+                                    </li>
+                                </>
                             )}
 
                         </ul>
