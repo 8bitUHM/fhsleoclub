@@ -1,18 +1,39 @@
-// import { useContext } from "react";
-// import AuthContext from "../contexts/AuthContext";
 import useAuthRedirect from "../lib/useAuthRedirect";
 import { useState } from "react";
 import { authorizedMembersRef, getChildRef } from "../lib/dbRefs";
 import { get, set } from "firebase/database";
 import { AuthContextProvider } from "../contexts/AuthContext";
+import ErrorMessage from "./ErrorMessage";
 
 const AddUser = () => {
 
     const [email, setEmail] = useState('');
+    const [emailToo, setEmailToo] = useState('');
+    const [message, setMessage] = useState("Test error message");
+    const [showMessage, setShowMessage] = useState(false);
+
+    useAuthRedirect();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const emailKey = email.split("@")[0];
+
+        if (email !== emailToo) {
+            setMessage("Please match the two emails");
+            setShowMessage(true);
+            return;
+        }
+
+        const isValidEmail = (email: string) => {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|mil|us|hi\.us|k12\.hi\.us)$/;
+            return emailRegex.test(email);
+        };
+
+        if (!isValidEmail(email)) {
+            setMessage("Please enter a valid email address.");
+            setShowMessage(true);
+            return;
+        }
 
         console.log(emailKey);
         try {
@@ -33,9 +54,6 @@ const AddUser = () => {
         }
     };
 
-    // const { user } = useContext(AuthContext);
-    useAuthRedirect();
-
     return (
         <>
             <AuthContextProvider>
@@ -53,13 +71,12 @@ const AddUser = () => {
                                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                                     <div>
                                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-red-900">User's Email</label>
-                                        <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required />
+                                        <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="School Email" required />
                                     </div>
-
-                                    {/* <div>
-                                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-red-900">Password</label>
-                                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required />
-                                </div> */}
+                                    <div>
+                                        <label htmlFor="emailToo" className="block mb-2 text-sm font-medium text-red-900">Confirm Email</label>
+                                        <input type="text" name="emailToo" id="emailToo" value={emailToo} onChange={(e) => setEmailToo(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Confirm School Email" required />
+                                    </div>
 
                                     <button type="submit" className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:cursor-progress disabled:bg-red-500">Add User</button>
 
@@ -69,6 +86,12 @@ const AddUser = () => {
                         </div>
                     </div>
                 </div>
+
+                <ErrorMessage
+                    message={message}
+                    showMessage={showMessage}
+                    setShowMessage={setShowMessage}
+                />
             </AuthContextProvider>
         </>
     );

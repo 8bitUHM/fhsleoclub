@@ -45,7 +45,7 @@ const SignupForm = () => {
             const authorizedMember = getChildRef(authorizedMembersRef, email.split('@')[0]);
             const value = await get(authorizedMember);
 
-            if (!value.exists() || value.child('email').val() !== email) {
+            if (!value.exists()) {
                 handleError('You are not an authorized member. Please contact the site admin if you believe this is a mistake');
                 return;
             }
