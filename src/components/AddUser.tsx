@@ -12,6 +12,7 @@ const AddUser = () => {
     const [message, setMessage] = useState("Test error message");
     const [showMessage, setShowMessage] = useState(false);
 
+    //Kicks the user back to home page if they are not logged in
     useAuthRedirect();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,11 +38,11 @@ const AddUser = () => {
 
         console.log(emailKey);
         try {
-            //This should be done after a valid email is typed
             const userRef = getChildRef(authorizedMembersRef, emailKey);
             const snapshot = await get(userRef);
             if (snapshot.exists()) {
-                console.log("Hey this email exists buddy boyo");
+                setMessage("The email that you inputted in exists in the database");
+                setShowMessage(true);
                 return;
             }
             await set(userRef, email);
