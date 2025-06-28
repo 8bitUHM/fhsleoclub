@@ -1,15 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../lib/config";
-import { authorizedMembersRef, getChildRef } from "../lib/dbRefs";
-import { get } from "@firebase/database";
 
-export interface UserData {
-  admin: boolean;
-  can_login: boolean;
-}
 export interface UserProps {
-  data: () => Promise<UserData>
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   isReady: boolean;
@@ -17,7 +10,6 @@ export interface UserProps {
 };
 
 const defaultValue:UserProps = {
-  data: async () => ({ admin: false, can_login: false}),
   user: null,
   setUser: () => null,
   isReady: false, 
@@ -39,29 +31,10 @@ const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => unsubscribe();
   }, []);
-
-  const data = async () => {
-    if (!user) {
-      return {
-        admin: false,
-        can_login: false,
-      }
-    }
-
-    const value = getChildRef(authorizedMembersRef, user.email!.split('@')[0]);
-    const info = await get(value);
-    
-    return {
-      admin: info.child('admin').val() as boolean,
-      can_login: info.child('admin').val() as boolean,
-    }
-
-  }
   
   return (
     <AuthContext.Provider
       value={{
-        data,
         user,
         setUser,
         isReady,

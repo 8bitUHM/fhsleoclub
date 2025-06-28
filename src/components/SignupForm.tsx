@@ -52,7 +52,7 @@ const SignupForm = () => {
 
             const userCred = await createUserWithEmailAndPassword(auth, email, password);
             const user = getChildRef(usersRef, userCred.user.uid);
-            set(user, value.child('admin').val());
+            set(user, true);
             window.location.href = "/";
         } catch (err) {
             setShowMessage(true);

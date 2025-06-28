@@ -26,7 +26,7 @@ const AddUser = () => {
         }
 
         const isValidEmail = (email: string) => {
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|mil|us|hi\.us|k12\.hi\.us)$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(org|hi\.us|k12\.hi\.us)$/;
             return emailRegex.test(email);
         };
 
@@ -41,7 +41,7 @@ const AddUser = () => {
             const userRef = getChildRef(authorizedMembersRef, emailKey);
             const snapshot = await get(userRef);
             if (snapshot.exists()) {
-                setMessage("The email that you inputted in exists in the database");
+                setMessage("The email that you inputted exists in the database");
                 setShowMessage(true);
                 return;
             }
