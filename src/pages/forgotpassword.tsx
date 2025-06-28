@@ -8,7 +8,7 @@ import "../index.css";
 export function ForgotPassword() {
   useEffect(() => {
     initFlowbite();
-  });
+  }, []);
 
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");

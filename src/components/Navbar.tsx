@@ -1,11 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/config";
 import AuthContext from "../contexts/AuthContext";
+import { initFlowbite } from "flowbite";
 
 const Navbar = () => {
 
-    const user = useContext(AuthContext);
+    useEffect(() => {
+        initFlowbite();
+    }, [])
+
+    const { user } = useContext(AuthContext);
 
     const handleClick = async () => {
         try {
@@ -46,6 +51,15 @@ const Navbar = () => {
                             <li>
                                 <a href="/members/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">Members</a>
                             </li>
+                            {user && (
+                                <>
+                                    <li>
+                                        <a href="/users/adduser/" className="block py-2 px-3 text-white rounded-sm hover:bg-red-800 focus:bg-red-800 md:py-2 md:bg-transparent md:border-0">
+                                            Add User
+                                        </a>
+                                    </li>
+                                </>
+                            )}
 
                         </ul>
                     </div>

@@ -1,18 +1,18 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import AddMember from "../components/AddMember";
+import AddUser from "../components/AddUser";
 import "../index.css";
 
 export function Add() {
     return (
         <>
-            <AddMember />
+            <AddUser />
         </>
     );
 }
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <Add />
+        <AddUser />
     </StrictMode>
 );

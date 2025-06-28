@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Member } from "../lib/types";
 import { child, remove } from "firebase/database";
 import { clubMembersRefs } from "../lib/dbRefs";
 import AuthContext from "../contexts/AuthContext";
+import { initFlowbite } from "flowbite";
 
 interface MemberDataProps {
   member: Member;
@@ -11,7 +12,12 @@ interface MemberDataProps {
 }
 
 const MemberData: React.FC<MemberDataProps> = ({ member, setSelectedMember, selectedMember }) => {
-  const user = useContext(AuthContext);
+  
+  useEffect(() => {
+    initFlowbite();
+  }, []);
+
+  const { user } = useContext(AuthContext);
 
   const handleDelete = (email: string) => {
     const encodedEmail = email.replace(/\./g, "_");
