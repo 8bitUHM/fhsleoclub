@@ -45,14 +45,14 @@ const SignupForm = () => {
             const authorizedMember = getChildRef(authorizedMembersRef, email.split('@')[0]);
             const value = await get(authorizedMember);
 
-            if (!value.exists() || value.child('email').val() !== email) {
+            if (!value.exists()) {
                 handleError('You are not an authorized member. Please contact the site admin if you believe this is a mistake');
                 return;
             }
 
             const userCred = await createUserWithEmailAndPassword(auth, email, password);
             const user = getChildRef(usersRef, userCred.user.uid);
-            set(user, value.child('admin').val());
+            set(user, true);
             window.location.href = "/";
         } catch (err) {
             setShowMessage(true);
