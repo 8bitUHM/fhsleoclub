@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ClubEvent } from "../lib/types";
-import { child, remove } from "firebase/database";
-import { eventRefs } from "../lib/dbRefs";
+import { remove } from "firebase/database";
+import { eventRefs, getChildRef } from "../lib/dbRefs";
 import AuthContext from "../contexts/AuthContext";
 
 interface EventDataProps {
@@ -12,23 +12,23 @@ interface EventDataProps {
 
 const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selectedEvent}) => {
     const user = useContext(AuthContext);
+    const eventDate = new Date(event.date);
 
-    const handleDelete = (title: string) => {
-        const encodedTitle = title.replace(/\./g, "_");
-        const eventRef = child(eventRefs, encodedTitle);
-        remove(eventRef)
-            .then(() => {
-            console.log("Event deleted successfully.");
-            })
-            .catch((error) => {
-            console.error("Error deleting event:", error);
-            });
+    const handleDelete = async (title: string) => {
+        const titleString = `${title.replace(/ /g, "_")}_${eventDate.getFullYear()}`;
+        const eventRef = getChildRef(eventRefs, titleString);
+        try {
+            await remove(eventRef);
+            console.log("Event Deleted Successfully");
+        } catch (error) {
+            console.error("Error Deleting Event: ", error);
+        }
     };
 
     return (
     <>
-        <span className="pb-2 font-normal text-sm text-pink-900">{new Date(event.date).toLocaleDateString()}</span>
-        <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 text-base sm:text-2xl">
+        <span className="pb-2 font-normal text-sm text-pink-900">{eventDate.toLocaleDateString()}</span>
+        <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
             {event.title}
         </h3>
         <div className="text-balance text-normal text-sm font-thin leading-5 pt-1 text-gray-600">
