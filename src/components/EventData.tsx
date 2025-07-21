@@ -28,15 +28,17 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
     return (
     <>
         <span className="pb-2 font-normal text-sm text-pink-900">{eventDate.toLocaleDateString()}</span>
-        <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
-            {event.title}
-        </h3>
-        <div className="text-balance text-normal text-sm font-thin leading-5 pt-1 text-gray-600">
-            <p>{event.location}</p>
-            {
-                (event.start_time && event.end_time) ? <p>{`${event.start_time}-${event.end_time}`}</p> : <p>{`${event.start_time}${event.end_time}`}</p>
-            }
-        </div>
+        <hgroup>
+            <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
+                {event.title}
+            </h3>
+            <div className="text-balance text-normal text-sm font-thin leading-5 pt-1 text-gray-600">
+                <p>{event.location}</p>
+                {
+                    (event.start_time && event.end_time) ? <p>{`${event.start_time}-${event.end_time}`}</p> : <p>{`${event.start_time}${event.end_time}`}</p>
+                }
+            </div>
+        </hgroup>
         <p className="text-pretty leading-6 pt-4">{event.description}</p>
         {user && (
             <>
