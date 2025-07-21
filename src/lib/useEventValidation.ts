@@ -8,8 +8,7 @@ export const useEventValidation = () => {
   const [showMessage, setShowMessage] = useState(false);
 
   const checkIfEventExists = async (title: string) => {
-    const titleKey = title.replace(/\./g, "_");
-    const eventRef = getChildRef(eventRefs, titleKey);
+    const eventRef = getChildRef(eventRefs, title);
 
     const snapshot = await get(eventRef);
 
