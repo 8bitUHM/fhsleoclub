@@ -4,6 +4,7 @@ import { eventRefs, getChildRef } from "../lib/dbRefs";
 import { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
 import { useEventValidation } from "../lib/useEventValidation";
+import { convertTo12 } from "../lib/dateFunctions";
 
 const AddEvent = () => {
   const [event, setEvent] = useState<ClubEvent>({
@@ -60,25 +61,7 @@ const AddEvent = () => {
   const handleTimeChange: ChangeEventHandler = (
     e: ChangeEvent<HTMLInputElement>
   ) => {
-    // eslint-disable-next-line prefer-const
-    let [hours, minutes] = e.currentTarget.value
-      .split(":")
-      .map((val) => Number(val));
-    let timeString: string;
-    const minuteString = minutes === 0 ? "00" : minutes.toString();
-
-    if (hours === 12) {
-      timeString = `${hours}:${minuteString}PM`;
-    } else if (hours === 0) {
-      hours = 12;
-      timeString = `${hours}:${minuteString}AM`;
-    } else if (hours > 12) {
-      hours -= 12;
-      timeString = `${hours}:${minuteString}PM`;
-    } else {
-      timeString = `${hours}:${minuteString}AM`;
-    }
-
+    const timeString = convertTo12(e.currentTarget.value);
     setEvent((prev) => ({
       ...prev,
       [e.target.name]: timeString,
@@ -97,15 +80,13 @@ const AddEvent = () => {
 
     try {
       const eventRef = getChildRef(eventRefs, eventKey);
-
-      // checks if event key exists in the database
+      
       const exists = checkIfEventExists(eventKey);
       if (!exists) {
         return;
       }
-
+      
       await set(eventRef, event);
-
       setEvent({
         title: "",
         description: "",
@@ -115,7 +96,6 @@ const AddEvent = () => {
         end_time: "",
       });
       console.log("Event added: ", event.title);
-      window.location.href = "/events/";
     } catch (err) {
       // checks if required fields are empty
       console.error("Error adding event: ", err);
@@ -190,54 +170,54 @@ const AddEvent = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="w-full">
-                <label
-                  htmlFor="date"
-                  className="block mb-2 text-sm font-medium text-red-900"
-                >
-                  Date
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  id="date"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  onChange={handleDateChange}
-                />
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div>
-                    <label
-                      htmlFor="start_time"
-                      className="block mb-2 text-sm font-medium text-red-900"
-                    >
-                      Start Time
-                    </label>
-                    <input
-                      type="time"
-                      name="start_time"
-                      id="start_time"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      onChange={handleTimeChange}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="end_time"
-                      className="block mb-2 text-sm font-medium text-red-900"
-                    >
-                      End Time
-                    </label>
-                    <input
-                      type="time"
-                      name="end_time"
-                      id="end_time"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                      onChange={handleTimeChange}
-                    />
-                  </div>
+              <div className="w-full flex flex-col *:basis-full md:flex-row justify-stretch items-stretch gap-4">
+                <div>
+                  <label
+                    htmlFor="date"
+                    className="block mb-2 text-sm font-medium text-red-900"
+                  >
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    name="date"
+                    id="date"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
+                    onChange={handleDateChange}
+                  />
                 </div>
+                <div>
+                  <label
+                    htmlFor="start_time"
+                    className="block mb-2 text-sm font-medium text-red-900"
+                  >
+                    Start Time
+                  </label>
+                  <input
+                    type="time"
+                    name="start_time"
+                    id="start_time"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
+                    onChange={handleTimeChange}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="end_time"
+                    className="block mb-2 text-sm font-medium text-red-900"
+                  >
+                    End Time
+                  </label>
+                  <input
+                    type="time"
+                    name="end_time"
+                    id="end_time"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
+                    onChange={handleTimeChange}
+                  />
               </div>
             </div>
+          </div>
 
             <button
               type="submit"

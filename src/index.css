@@ -11,3 +11,17 @@
     scroll-behavior: auto;
   }
 }
+
+input[type="time"], input[type="date"] {
+  /* Doing this so that native elements (i.e Native iOS Date Picker) 
+     follows styles on phone. Also sets up a minimum height so that
+     it's not too small on mobile devices as well.
+  */
+  appearance: textfield;
+  min-width: 100% !important;
+  text-align: start;
+}
+
+input::-webkit-date-and-time-value {
+    text-align: left;
+}
