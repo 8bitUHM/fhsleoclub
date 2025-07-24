@@ -96,6 +96,8 @@ const AddEvent = () => {
         end_time: "",
       });
       console.log("Event added: ", event.title);
+
+      window.location.href="/events/";
     } catch (err) {
       // checks if required fields are empty
       console.error("Error adding event: ", err);

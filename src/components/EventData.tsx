@@ -11,18 +11,13 @@ interface EventDataProps {
 }
 
 const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selectedEvent}) => {
-    const user = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const eventDate = new Date(event.date);
 
-    const handleDelete = async (title: string) => {
+    const handleDelete = (title: string) => {
         const titleString = `${title.replace(/ /g, "_")}_${eventDate.getFullYear()}`;
         const eventRef = getChildRef(eventRefs, titleString);
-        try {
-            await remove(eventRef);
-            console.log("Event Deleted Successfully");
-        } catch (error) {
-            console.error("Error Deleting Event: ", error);
-        }
+        remove(eventRef).catch((e) => console.error(`Unable to delete event. Reason: ${e}`));
     };
 
     return (
@@ -81,9 +76,10 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
                             </svg>
                             <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete {selectedEvent?.title}</h3>
                             <button onClick={() => {
-                                if (selectedEvent)
-                                    handleDelete(selectedEvent.title);
-                                }} data-modal-hide="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                if (selectedEvent) {
+                                    handleDelete(selectedEvent.title)
+                                }
+                            }} data-modal-hide="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                 Yes, I'm sure
                             </button>
                             <button data-modal-hide="popup-modal" type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">No, cancel</button>

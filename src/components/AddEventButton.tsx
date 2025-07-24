@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 
 const AddEventButton = () => {
-    const user = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     return (
         <>

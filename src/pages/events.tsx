@@ -17,8 +17,7 @@ export function Events() {
     const [ events, setEvents ] = useState<ClubEvent[]>([]);
     const [ isLatest, setIsLatest ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(true);
-    const [selectedEvent, setSelectedEvent] = useState<ClubEvent | null>(null);
-
+    const [ selectedEvent, setSelectedEvent ] = useState<ClubEvent | null>(null);
     
     useEffect(() => {
         initFlowbite();
@@ -80,6 +79,7 @@ export function Events() {
                     </form>
 
                     <AddEventButton />
+                    
 
                     <section className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                         {
