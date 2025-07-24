@@ -9,12 +9,20 @@ import { onValue } from "firebase/database";
 import Loading from "../components/Loading";
 import { AuthContextProvider } from "../contexts/AuthContext";
 import "../index.css";
+import EventData from "../components/EventData";
+import AddEventButton from "../components/AddEventButton";
+import { initFlowbite } from "flowbite";
 
 export function Events() {
     const [ events, setEvents ] = useState<ClubEvent[]>([]);
     const [ isLatest, setIsLatest ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(true);
+    const [ selectedEvent, setSelectedEvent ] = useState<ClubEvent | null>(null);
     
+    useEffect(() => {
+        initFlowbite();
+    })
+
     useEffect(() => {
         const unsubscribe = onValue(eventRefs, (snapshot) => {
             if (snapshot.exists()) {
@@ -46,7 +54,7 @@ export function Events() {
                 <Navbar />
                 <Header />
                 <main className="px-4 py-6">
-                    <form className="inline-flex rounded-lg shadow-sm font-medium text-sm text-white bg-rose-600 my-6" role="group">
+                    <form className="flex flex-col w-fit rounded-lg shadow-sm font-medium text-sm text-white bg-rose-600 my-6" role="group">
                         <p className="sr-only">Sort by latest or earliest events</p>
                         <button type="button" 
                                 className="px-4 py-2 rounded-lg hover:bg-rose-700 inline-flex items-center text-center gap-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-900"
@@ -70,23 +78,19 @@ export function Events() {
                         </button>
                     </form>
 
+                    <AddEventButton />
+                    
 
-                    <section className="gap-x-4 gap-y-4 justify-center" style={{display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(10rem, 20rem))"}}>
+                    <section className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                         {
                             !isLoading ? 
                             (events.map((val, index) => (
-                                <article className="grid grid-rows-subgrid gap-y-0 row-span-4 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${index}`}>
-                                    <span className="pb-2 font-normal text-sm text-pink-900">{new Date(val.date).toLocaleDateString()}</span>
-                                    <h3 className="text-rose-900 font-bold text-lg text-pretty pt-1 sm:text-2xl">
-                                        {val.title}
-                                    </h3>
-                                    <div className="text-balance text-normal text-sm font-thin leading-5 pt-1 text-gray-600">
-                                        <p>{val.location}</p>
-                                        {
-                                            (val.start_time && val.end_time) ? <p>{`${val.start_time}-${val.end_time}`}</p> : <p>{`${val.start_time}${val.end_time}`}</p>
-                                        }
-                                    </div>
-                                    <p className="text-pretty leading-6 pt-4">{val.description}</p>
+                                <article className="grid lg:grid-rows-subgrid lg:row-span-4 border p-4 border-black rounded-lg bg-neutral-50 shadow-sm" key={`${index}`}>
+                                    <EventData 
+                                       event={val}
+                                       selectedEvent={selectedEvent}
+                                       setSelectedEvent={setSelectedEvent} 
+                                    />
                                 </article>
                             ))) : <Loading />
                         }

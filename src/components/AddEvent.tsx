@@ -1,21 +1,20 @@
-import { useEffect, useState, ChangeEventHandler, ChangeEvent } from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { set } from "firebase/database";
 import { eventRefs, getChildRef } from "../lib/dbRefs";
-import { remove, update } from "firebase/database";
 import { ClubEvent } from "../lib/types";
 import useAuthRedirect from "../lib/useAuthRedirect";
 import { useEventValidation } from "../lib/useEventValidation";
-import { convertTo12, convertTo24 } from "../lib/dateFunctions";
+import { convertTo12 } from "../lib/dateFunctions";
 
-const UpdateEvent = () => {
+const AddEvent = () => {
   const [event, setEvent] = useState<ClubEvent>({
-    description: "",
-    end_time: "",
-    start_time: "",
     title: "",
+    description: "",
     location: "",
+    start_time: "",
+    end_time: "",
     date: 0,
   });
-
   const {
     loading,
     message,
@@ -26,77 +25,8 @@ const UpdateEvent = () => {
     checkIfEventExists,
   } = useEventValidation();
 
-  // key for events db reference
-  const [prevTitle, setPrevTitle] = useState("");
-
-  // Kicks the user back to home page if they are not logged in
-  useAuthRedirect();
-
-  // grabs what the user clicked on to "update" from events page
-  useEffect(() => {
-    const stored = sessionStorage.getItem("eventData");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setPrevTitle(parsed.title);
-      setEvent(parsed);
-    }
-  }, []);
-
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const year = new Date(event.date).getFullYear();
-    const titleKey = `${event.title.replace(/ /g, "_")}_${year}`;
-    const prevTitleKey = `${prevTitle.replace(/ /g, "_")}_${year}`;
-
-    setLoading(true);
-    try {
-      const eventRef = getChildRef(eventRefs, titleKey);
-
-      if (titleKey !== prevTitleKey) {
-        const exists = await checkIfEventExists(event.title);
-        if (exists) return;
-      }
-
-      // Updates the event's data as long as it doesn't run into any errors
-      await update(eventRef, {
-        title: event.title,
-        description: event.description,
-        location: event.location,
-        date: event.date,
-        start_time: event.start_time,
-        end_time: event.end_time,
-      });
-      console.log("Events' data updated successfully.");
-
-      // This removes the previous email data only if the current title and previous title are not the same
-      if (titleKey !== prevTitleKey) {
-        const prevTitleRef = getChildRef(eventRefs, prevTitleKey);
-        remove(prevTitleRef);
-      }
-
-      window.location.href = "/events/";
-    } catch (err) {
-      // Checks if required fields are empty
-      console.error("Error updating event data: ", err);
-      setShowMessage(true);
-      if (
-        event.title.length === 0 ||
-        event.description.length === 0 ||
-        event.location.length === 0 ||
-        event.date === 0
-      ) {
-        setMessage("Please fill in the blanks");
-      } else {
-        setMessage(`${err}`);
-      }
-    }
-    setLoading(false);
-  };
-
-  // takes change in input and modifies event given the updated input values
-  const handleInputChange: ChangeEventHandler = (
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
+  // handles value changes in adding/altering events
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     setEvent((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -132,11 +62,59 @@ const UpdateEvent = () => {
     e: ChangeEvent<HTMLInputElement>
   ) => {
     const timeString = convertTo12(e.currentTarget.value);
-
     setEvent((prev) => ({
       ...prev,
       [e.target.name]: timeString,
     }));
+  };
+
+  // kicks user back to home page if they aren't logged in
+  useAuthRedirect();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const eventYear = new Date(event.date).getFullYear();
+    const eventKey = `${event.title.trim().replace(/ /g, "_")}_${eventYear}`;
+
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const eventRef = getChildRef(eventRefs, eventKey);
+      
+      const exists = checkIfEventExists(eventKey);
+      if (!exists) {
+        return;
+      }
+      
+      await set(eventRef, event);
+      setEvent({
+        title: "",
+        description: "",
+        location: "",
+        date: 0,
+        start_time: "",
+        end_time: "",
+      });
+      console.log("Event added: ", event.title);
+
+      window.location.href="/events/";
+    } catch (err) {
+      // checks if required fields are empty
+      console.error("Error adding event: ", err);
+      console.log(event);
+      setShowMessage(true);
+      if (
+        event.title.length === 0 ||
+        event.description.length === 0 ||
+        event.location.length === 0 ||
+        event.date === 0
+      ) {
+        setMessage("Please fill out required information");
+      } else {
+        setMessage(`${err}`);
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -144,7 +122,7 @@ const UpdateEvent = () => {
       <section className="bg-red-900 min-h-screen flex items-center justify-center">
         <div className="bg-white py-8 px-4 mx-auto max-w-2xl w-full rounded-lg">
           <h2 className="mb-4 text-xl font-bold text-red-900">Add an event</h2>
-          <form onSubmit={handleUpdate}>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-4 grid-cols-1 sm:gap-6">
               <div>
                 <label
@@ -159,7 +137,7 @@ const UpdateEvent = () => {
                   id="title"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   value={event.title}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -175,7 +153,7 @@ const UpdateEvent = () => {
                   rows={1}
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   value={event.description}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -191,7 +169,7 @@ const UpdateEvent = () => {
                   id="location"
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   value={event.location}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                 />
               </div>
               <div className="w-full flex flex-col *:basis-full md:flex-row justify-stretch items-stretch gap-4">
@@ -207,7 +185,6 @@ const UpdateEvent = () => {
                     name="date"
                     id="date"
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
-                    value={new Date(event.date).toISOString().slice(0, 10)}
                     onChange={handleDateChange}
                   />
                 </div>
@@ -223,7 +200,6 @@ const UpdateEvent = () => {
                     name="start_time"
                     id="start_time"
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
-                    value={convertTo24(event.start_time)}
                     onChange={handleTimeChange}
                   />
                 </div>
@@ -238,20 +214,19 @@ const UpdateEvent = () => {
                     type="time"
                     name="end_time"
                     id="end_time"
-                    className=" bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
-                    value={convertTo24(event.end_time)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
                     onChange={handleTimeChange}
                   />
-                </div>
               </div>
             </div>
+          </div>
 
             <button
               type="submit"
               disabled={loading}
               className="w-full text-white bg-red-900 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 sm:mt-6 text-center disabled:cursor-progress disabled:bg-red-500"
             >
-              {loading ? "Updating..." : "Update"}
+              {loading ? "Adding..." : "Add"}
             </button>
 
             <a
@@ -321,4 +296,4 @@ const UpdateEvent = () => {
   );
 };
 
-export default UpdateEvent;
+export default AddEvent;
