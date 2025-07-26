@@ -143,7 +143,7 @@ const UpdateEvent = () => {
     <>
       <section className="bg-red-900 min-h-screen flex items-center justify-center">
         <div className="bg-white py-8 px-4 mx-auto max-w-2xl w-full rounded-lg">
-          <h2 className="mb-4 text-xl font-bold text-red-900">Add an event</h2>
+          <h2 className="mb-4 text-xl font-bold text-red-900">Update Event</h2>
           <form onSubmit={handleUpdate}>
             <div className="grid gap-4 grid-cols-1 sm:gap-6">
               <div>

@@ -82,8 +82,13 @@ const AddEvent = () => {
       const eventRef = getChildRef(eventRefs, eventKey);
       
       const exists = checkIfEventExists(eventKey);
+      
       if (!exists) {
         return;
+      }
+
+      if (eventYear.toString().length > 4) {
+        throw new Error("Year can only be 4 digits!")
       }
       
       await set(eventRef, event);
