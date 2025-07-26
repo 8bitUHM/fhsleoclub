@@ -18,7 +18,7 @@ export default defineConfig({
         update: resolve(__dirname, "members/update/index.html"),
         add: resolve(__dirname, "members/add/index.html"),
         reset: resolve(__dirname, "auth/reset-password/index.html"),
-        adduser: resolve(__dirname, "adduser/index.html"),
+        adduser: resolve(__dirname, "users/adduser/index.html"),
         addevent: resolve(__dirname, "events/add/index.html"),
         updateevent: resolve(__dirname, "events/update/index.html")
         // example-page-directory: resolve(__dirname, 'path/to/page/index.html'),
