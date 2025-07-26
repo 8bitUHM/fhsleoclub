@@ -8,7 +8,6 @@ import { AuthContextProvider } from "../contexts/AuthContext";
 import "../index.css";
 
 export function Contact() {
-
     return (
         <>
             <div className="flex flex-col min-h-screen">

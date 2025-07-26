@@ -37,7 +37,6 @@ export function Events() {
         return () => unsubscribe();
     }, []);
 
-
     const handleClick = () => {
         setIsLatest(!isLatest);
         if (isLatest) {
@@ -45,7 +44,6 @@ export function Events() {
         } else {
             events.sort((a, b) => a.date < b.date ? 1 : -1);
         }
-
     }
 
     return (
@@ -80,7 +78,6 @@ export function Events() {
                         </form>
 
                         <AddEventButton />
-
 
                         <section className="gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                             {

@@ -7,7 +7,6 @@ import { AuthContextProvider } from "../contexts/AuthContext";
 import "../index.css";
 
 export function Index() {
-
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -85,9 +84,7 @@ export function Index() {
               </div>
             </div>
           </section>
-
         </main>
-
         <Footer />
       </div>
     </>
