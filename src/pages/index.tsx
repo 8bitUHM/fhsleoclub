@@ -10,11 +10,12 @@ export function Index() {
 
   return (
     <>
+      <div className="flex flex-col min-h-screen">
         <AuthContextProvider>
           <Navbar />
         </AuthContextProvider>
         <Header />
-        <main className="min-h-screen">
+        <main className="flex-grow">
           {/* What is Leo Club */}
           <section className="py-16 px-4">
             <div className="max-w-7xl mx-auto">
@@ -22,12 +23,12 @@ export function Index() {
               <div className="flex gap-12 items-center">
                 <div>
                   <p className="text-center text-2xl mb-4">
-                  The W.R. Farrington High School Leo Club is a school-based 
-                  community service club sponsored by the Kalakaua Lions. Our club 
-                  ensures our students have the opportunity to serve their community 
-                  with great responsibility, all while improving leadership, social, 
-                  and organizational skills. We aim to help our community and island 
-                  in any way we can. Community service is our calling!
+                    The W.R. Farrington High School Leo Club is a school-based
+                    community service club sponsored by the Kalakaua Lions. Our club
+                    ensures our students have the opportunity to serve their community
+                    with great responsibility, all while improving leadership, social,
+                    and organizational skills. We aim to help our community and island
+                    in any way we can. Community service is our calling!
                   </p>
                 </div>
               </div>
@@ -86,9 +87,10 @@ export function Index() {
           </section>
 
         </main>
-        
+
         <Footer />
-      </>
+      </div>
+    </>
   );
 }
 
