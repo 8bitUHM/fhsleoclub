@@ -14,8 +14,11 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
     const { user } = useContext(AuthContext);
     const eventDate = new Date(event.date);
 
-    const handleDelete = (title: string) => {
-        const titleString = `${title.replace(/ /g, "_")}_${eventDate.getFullYear()}`;
+    const handleDelete = (event:ClubEvent) => {
+        // Using eventDate keeps it stuck on the first element
+        // in the data. DON'T USE eventDate!
+        const year = new Date(event.date).getFullYear();
+        const titleString = `${event.title.replace(/ /g, "_")}_${year}`;
         const eventRef = getChildRef(eventRefs, titleString);
         remove(eventRef).catch((e) => console.error(`Unable to delete event. Reason: ${e}`));
     };
@@ -77,7 +80,7 @@ const EventData: React.FC<EventDataProps> = ({ event, setSelectedEvent, selected
                             <h3 className="mb-5 text-lg font-normal text-black">Are you sure you want to delete {selectedEvent?.title}</h3>
                             <button onClick={() => {
                                 if (selectedEvent) {
-                                    handleDelete(selectedEvent.title)
+                                    handleDelete(selectedEvent);
                                 }
                             }} data-modal-hide="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                 Yes, I'm sure
