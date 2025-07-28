@@ -4,6 +4,7 @@
 
 :root {
   scroll-behavior: smooth;
+  @apply min-h-screen;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -12,7 +13,8 @@
   }
 }
 
-input[type="time"], input[type="date"] {
+input[type="time"],
+input[type="date"] {
   /* Doing this so that native elements (i.e Native iOS Date Picker) 
      follows styles on phone. Also sets up a minimum height so that
      it's not too small on mobile devices as well.
@@ -23,5 +25,5 @@ input[type="time"], input[type="date"] {
 }
 
 input::-webkit-date-and-time-value {
-    text-align: left;
+  text-align: left;
 }
