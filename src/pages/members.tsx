@@ -80,9 +80,9 @@ export function Members() {
                   {/* Officers Section */}
                   <section className="p-6 text-red-900 text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
-                    <div className="grid grid-cols-2 gap-x-4 justify-center items-center md:grid-cols-3 lg:grid-cols-6">
+                    <div className="flex flex-wrap justify-center items-center gap-y-4 gap-x-11">
                       {officers.sort((a, b) => Roles[a.role] - Roles[b.role]).map((member) => (
-                        <div key={member.email} className="mb-4 space-y-1 grid grid-rows-[auto_auto_auto_auto] items-start">
+                        <div key={member.email} className="mb-4 space-y-1">
                           <MemberData
                             member={member}
                             setSelectedMember={setSelectedMember}
@@ -97,19 +97,17 @@ export function Members() {
                   {/* General Members Section */}
                   <section className="bg-red-900 p-6 text-white text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Club Members</h2>
-                    <div className="flex justify-center">
-                      <div className="grid grid-flow-row-dense grid-cols-2 lg:grid-cols-4 place-items-center gap-x-8 gap-y-2">
-                        {generalMembers.map((member) => (
-                          <div key={member.email} className="mb-4 space-y-1">
-                            <MemberData
-                              member={member}
-                              setSelectedMember={setSelectedMember}
-                              selectedMember={selectedMember}
-                            />
-                          </div>
-                        ))}
-                        <AddMemberButton />
-                      </div>
+                    <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
+                      {generalMembers.map((member) => (
+                        <div key={member.email} className="mb-4 space-y-1">
+                          <MemberData
+                            member={member}
+                            setSelectedMember={setSelectedMember}
+                            selectedMember={selectedMember}
+                          />
+                        </div>
+                      ))}
+                      <AddMemberButton />
                     </div>
                   </section>
                   <Footer />
