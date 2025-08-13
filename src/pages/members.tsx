@@ -63,7 +63,7 @@ export function Members() {
                   {/* Advisors Section */}
                   <section className="bg-red-900 p-6 text-white text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Advisors</h2>
-                    <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
+                    <div className="grid grid-cols-1 justify-center items-center gap-x-11 gap-y-4 md:flex md:flex-wrap">
                       {advisors.map((member) => (
                         <div key={member.email} className="mb-4 space-y-1">
                           <MemberData
@@ -80,7 +80,7 @@ export function Members() {
                   {/* Officers Section */}
                   <section className="p-6 text-red-900 text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Officers</h2>
-                    <div className="flex flex-wrap justify-center items-center gap-y-4 gap-x-11">
+                    <div className="fgrid grid-cols-1 justify-center items-center gap-y-4 gap-x-11 md:flex md:flex-wrap">
                       {officers.sort((a, b) => Roles[a.role] - Roles[b.role]).map((member) => (
                         <div key={member.email} className="mb-4 space-y-1">
                           <MemberData
@@ -97,7 +97,7 @@ export function Members() {
                   {/* General Members Section */}
                   <section className="bg-red-900 p-6 text-white text-center">
                     <h2 className="text-3xl md:text-4xl font-semibold pb-6">Club Members</h2>
-                    <div className="flex flex-wrap justify-center items-center gap-x-11 gap-y-4">
+                    <div className="grid grid-cols-1 justify-center items-center gap-x-11 gap-y-4 md:flex md:flex-wrap">
                       {generalMembers.map((member) => (
                         <div key={member.email} className="mb-4 space-y-1">
                           <MemberData
