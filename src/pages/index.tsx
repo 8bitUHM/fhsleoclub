@@ -23,7 +23,7 @@ export function Index() {
                 <div>
                   <p className="text-center text-2xl mb-4">
                     The W.R. Farrington High School Leo Club is a school-based
-                    community service club sponsored by the Kalakaua Lions. Our club
+                    community service club sponsored by the Moanalua Lions. Our club
                     ensures our students have the opportunity to serve their community
                     with great responsibility, all while improving leadership, social,
                     and organizational skills. We aim to help our community and island
